@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥑</text></svg>">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Green Gold Colombia</title>
@@ -89,6 +90,25 @@ img{display:block;max-width:100%}
 #nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 #nav-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 #nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nos-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nos-visual img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.nos-visual {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
 
 /* ============================================================
    SIDE NAV (slide-out menu with full sections)
@@ -149,7 +169,13 @@ img{display:block;max-width:100%}
   font-size:.68rem;font-weight:700;
   display:none;align-items:center;justify-content:center;
 }
-
+.video-player {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  margin-top: 20px;
+} 
 /* ============================================================
    CART SIDEBAR
 ============================================================ */
@@ -598,7 +624,7 @@ img{display:block;max-width:100%}
 <nav id="side-nav">
   <div class="nav-logo-block">
     <!-- Logo image embedded as base64 placeholder; will show company name if image not found -->
-    <img src="1774311640795_image.png" alt="Green Gold Colombia Logo" onerror="this.style.display='none'" id="side-logo">
+    <img src="Aguacate1.jpg" alt="Green Gold Colombia Logo" onerror="this.style.display='none'" id="side-logo">
     <strong>Green Gold Colombia</strong>
     <small data-i18n="nav_sub">Aguacate Hass Premium · Tolima</small>
   </div>
@@ -625,9 +651,11 @@ img{display:block;max-width:100%}
     <div class="hero-deco">🥑</div>
     <div class="hero-inner">
       <div class="hero-badge" data-i18n="hero_badge">🌎 Exportación · Colombia → Europa</div>
+      <img class="hero-logo" src="Aguacate1.jpg" alt="Green Gold Colombia" 
+        style="width:460px;" 
+        onerror="this.style.display='none'">
       <h1 class="hero-title">Green <em>Gold</em><br>Colombia</h1>
       <!-- Logo below company name in hero -->
-      <img class="hero-logo" src="1774311640795_image.png" alt="Green Gold Colombia" onerror="this.style.display='none'">
       <p class="hero-slogan" id="slogan-text"></p>
       <div class="hero-ctas">
         <button class="btn-primary" onclick="goTo('producto')">
@@ -654,7 +682,7 @@ img{display:block;max-width:100%}
     <div class="section-wrap">
       <div class="nos-grid reveal">
         <div class="nos-visual">
-          <span>🥑</span>
+          <img src="Aguacate1.jpg">
           <p data-i18n="nos_cap">Tolima, Colombia · Finca propia</p>
         </div>
         <div>
@@ -698,7 +726,9 @@ img{display:block;max-width:100%}
       </div>
       <div class="prod-grid reveal">
         <div class="avo-card">
-          <div class="avo-hero">🥑</div>
+          <div class="nos-visual"> 
+            <img src="Aguacate1.jpg">
+          </div>
           <div class="avo-body">
             <h3 data-i18n="prod_ct">Aguacate Hass Colombiano</h3>
             <p data-i18n="prod_cd">Cultivado en las altitudes ideales del Tolima, nuestro aguacate Hass presenta pulpa cremosa, sabor excepcional y vida útil superior.</p>
@@ -871,12 +901,12 @@ img{display:block;max-width:100%}
       <h2 class="sec-title" data-i18n="vid_title">Así nace nuestro&#10;aguacate</h2>
       <div class="gold-line center"></div>
       <p style="max-width:520px;margin:0 auto" data-i18n="vid_d">Del corazón del Tolima, te mostramos el proceso de cultivo y cosecha del Aguacate Hass.</p>
-      <div class="video-wrap reveal">
-        <div class="video-inner">
+      <div class="video-wrap reveal" onclick="playVideo()">
+        <div class="video-inner" id="videoContainer">
           <div class="play-ring">▶</div>
-          <p data-i18n="vid_cap">Cultivo · Aguacate Hass · Tolima, Colombia</p>
+          <p>Cultivo · Aguacate Hass · Tolima, Colombia</p>
         </div>
-      </div>
+</div>
     </div>
     <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
   </div>
@@ -1679,6 +1709,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     showSlogan();
   },4000);
 });
+
+function playVideo() {
+  document.getElementById("videoContainer").innerHTML = `
+    <video controls autoplay style="width:100%; border-radius:15px;">
+      <source src="Aguacate.mp4" type="video/mp4">
+    </video>
+  `;
+}
 </script>
 </body>
 </html>
