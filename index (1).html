@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥑</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Gold Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   VARIABLES & RESET
+============================================================ */
+:root {
+  --g-deep:   #1a3a1f;
+  --g-mid:    #2d6a35;
+  --g-light:  #4caf60;
+  --gold:     #c8a84b;
+  --gold-lt:  #e8c96c;
+  --cream:    #f5f0e8;
+  --white:    #ffffff;
+  --txt-dark: #1a1a1a;
+  --txt-mid:  #3a3a3a;
+  --txt-lt:   #7a7a7a;
+  --sh:       0 8px 40px rgba(26,58,31,.12);
+  --sh-hv:    0 16px 60px rgba(26,58,31,.22);
+  --radius:   20px;
+  --nav-w:    290px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--txt-dark);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.1}
+h1{font-size:clamp(2.8rem,7vw,5.5rem)}
+h2{font-size:clamp(2rem,4vw,3.4rem)}
+h3{font-size:clamp(1.3rem,2.5vw,2rem)}
+p{line-height:1.75;color:var(--txt-mid)}
+a{text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ============================================================
+   LANG BAR
+============================================================ */
+#lang-bar{
+  position:fixed;top:0;right:0;z-index:1200;
+  display:flex;gap:4px;padding:8px 16px;
+  background:rgba(26,58,31,.94);backdrop-filter:blur(10px);
+  border-bottom-left-radius:14px;
+}
+.lang-btn{
+  background:none;border:1px solid rgba(200,168,75,.4);
+  color:var(--gold-lt);padding:4px 11px;border-radius:6px;
+  cursor:pointer;font-size:.72rem;font-family:'DM Sans',sans-serif;
+  font-weight:500;letter-spacing:.08em;transition:all .2s;
+}
+.lang-btn.active,.lang-btn:hover{background:var(--gold);color:var(--g-deep);border-color:var(--gold)}
+
+/* ============================================================
+   TOP NAV BAR (centered menu links)
+============================================================ */
+#top-nav{
+  position:fixed;top:0;left:0;right:0;z-index:1050;
+  background:rgba(26,58,31,.96);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  padding:0 220px 0 64px; /* left: space for hamburger, right: space for lang-bar */
+  height:52px;
+  border-bottom:1px solid rgba(200,168,75,.15);
+  overflow-x:auto;
+  gap:2px;
+}
+.top-nav-link{
+  background:none;border:none;color:rgba(255,255,255,.75);
+  font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;
+  letter-spacing:.04em;cursor:pointer;padding:6px 9px;border-radius:8px;
+  transition:all .2s;white-space:nowrap;
+}
+.top-nav-link:hover,.top-nav-link.active{background:rgba(200,168,75,.18);color:var(--gold-lt)}
+
+/* ============================================================
+   HAMBURGER — top-left
+============================================================ */
+#nav-toggle{
+  position:fixed;top:10px;left:14px;transform:none;
+  z-index:1100;background:var(--g-deep);border:none;cursor:pointer;
+  padding:10px 10px;border-radius:10px;
+  display:flex;flex-direction:column;gap:5px;
+  box-shadow:4px 0 20px rgba(0,0,0,.2);transition:background .3s;
+}
+#nav-toggle span{display:block;width:22px;height:2px;background:var(--gold-lt);border-radius:2px;transition:all .35s}
+#nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+#nav-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+#nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nos-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.nos-visual img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.nos-visual {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+/* ============================================================
+   SIDE NAV (slide-out menu with full sections)
+============================================================ */
+#side-nav{
+  position:fixed;top:0;left:calc(-1 * var(--nav-w));
+  width:var(--nav-w);height:100vh;
+  background:var(--g-deep);z-index:1099;
+  transition:left .42s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  padding:80px 0 40px;
+  box-shadow:8px 0 50px rgba(0,0,0,.3);
+  overflow-y:auto;
+}
+#side-nav.open{left:0}
+.nav-logo-block{padding:0 28px 20px;border-bottom:1px solid rgba(200,168,75,.18);margin-bottom:12px;text-align:center}
+.nav-logo-block img{width:90px;height:auto;margin:0 auto 10px;border-radius:8px}
+.nav-logo-block strong{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--gold-lt);font-weight:600;display:block}
+.nav-logo-block small{color:rgba(255,255,255,.4);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+.nav-link{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 28px;color:rgba(255,255,255,.75);
+  font-size:.86rem;font-weight:500;letter-spacing:.03em;
+  cursor:pointer;transition:all .22s;position:relative;border:none;background:none;width:100%;text-align:left;
+}
+.nav-link::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:0;background:var(--gold);border-radius:0 2px 2px 0;transition:height .22s;
+}
+.nav-link:hover,.nav-link.active{color:var(--gold-lt);padding-left:36px}
+.nav-link:hover::before,.nav-link.active::before{height:55%}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:1098}
+.nav-overlay.show{display:block}
+
+/* ============================================================
+   PAGES CONTAINER
+============================================================ */
+#app{width:100%;min-height:100vh;padding-top:52px}
+.page{display:none;animation:pgIn .5s ease both}
+.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   CART BUTTON
+============================================================ */
+#cart-btn{
+  position:fixed;bottom:28px;right:28px;z-index:1050;
+  background:var(--g-deep);color:white;border:none;
+  width:58px;height:58px;border-radius:50%;font-size:1.4rem;
+  cursor:pointer;box-shadow:0 4px 22px rgba(0,0,0,.22);
+  display:flex;align-items:center;justify-content:center;transition:all .3s;
+}
+#cart-btn:hover{background:var(--g-mid);transform:scale(1.06)}
+#cart-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--gold);color:var(--g-deep);
+  width:22px;height:22px;border-radius:50%;
+  font-size:.68rem;font-weight:700;
+  display:none;align-items:center;justify-content:center;
+}
+.video-player {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  margin-top: 20px;
+} 
+/* ============================================================
+   CART SIDEBAR
+============================================================ */
+#cart-sidebar{
+  position:fixed;top:0;right:-420px;width:400px;height:100vh;
+  background:white;z-index:1300;
+  transition:right .42s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-8px 0 40px rgba(0,0,0,.16);
+}
+#cart-sidebar.open{right:0}
+.cart-hdr{background:var(--g-deep);color:white;padding:22px 28px;display:flex;align-items:center;justify-content:space-between}
+.cart-hdr h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem}
+.cart-close{background:none;border:none;color:white;font-size:1.4rem;cursor:pointer;line-height:1}
+.cart-body{flex:1;overflow-y:auto;padding:24px 28px}
+.cart-empty-msg{text-align:center;padding:60px 16px;color:var(--txt-lt)}
+.cart-empty-msg .ei{font-size:4rem;margin-bottom:12px}
+.cart-item-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.cart-item-row .ci-icon{font-size:1.8rem}
+.cart-item-row .ci-name{font-weight:600;font-size:.88rem;color:var(--g-deep)}
+.cart-item-row .ci-detail{font-size:.76rem;color:var(--txt-lt);margin-top:3px}
+.cart-item-row .ci-price{margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);font-weight:700}
+.cart-item-del{background:none;border:none;color:#cc4444;font-size:1rem;cursor:pointer;margin-left:8px;padding:4px 6px;border-radius:6px;transition:background .2s}
+.cart-item-del:hover{background:rgba(204,68,68,.08)}
+.cart-ftr{padding:22px 28px;border-top:1px solid rgba(0,0,0,.08)}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cart-total-row span{font-size:.8rem;color:var(--txt-lt);text-transform:uppercase;letter-spacing:.1em}
+.cart-total-row .ct-price{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--g-deep);font-weight:700}
+.btn-checkout{width:100%;background:var(--gold);color:var(--g-deep);border:none;padding:15px;border-radius:12px;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:.05em}
+.btn-checkout:hover{background:var(--gold-lt);transform:translateY(-1px)}
+
+/* Cart summary breakdown */
+.cart-summary-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--g-deep);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.cart-breakdown{background:rgba(26,58,31,.04);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:.8rem;color:var(--txt-mid)}
+.cart-breakdown .cb-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.cart-breakdown .cb-row:last-child{border-bottom:none;font-weight:700;color:var(--g-deep);padding-top:8px}
+
+/* Order success modal */
+#order-modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;
+  align-items:center;justify-content:center;
+}
+#order-modal.show{display:flex}
+.order-modal-box{background:white;border-radius:20px;padding:44px 40px;max-width:460px;width:90%;text-align:center;animation:pgIn .4s ease both}
+.order-modal-box .om-icon{font-size:4rem;margin-bottom:16px}
+.order-modal-box h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--g-deep);margin-bottom:12px}
+.order-modal-box p{font-size:.9rem;color:var(--txt-mid);margin-bottom:26px}
+.om-ref{background:var(--cream);border-radius:10px;padding:10px 18px;font-weight:700;color:var(--g-deep);margin-bottom:24px;font-size:1rem}
+.om-btn{background:var(--g-deep);color:white;border:none;padding:13px 32px;border-radius:100px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .3s}
+.om-btn:hover{background:var(--g-mid)}
+
+/* Contact success modal */
+#contact-modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;
+  align-items:center;justify-content:center;
+}
+#contact-modal.show{display:flex}
+
+/* ============================================================
+   SHARED COMPONENTS
+============================================================ */
+.section-wrap{max-width:1100px;margin:0 auto;padding:70px 28px}
+.sec-label{display:inline-block;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--g-mid);font-weight:600;margin-bottom:14px}
+.sec-title{color:var(--g-deep);margin-bottom:20px;white-space:pre-line}
+.gold-line{width:56px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:36px}
+.gold-line.center{margin:0 auto 36px}
+.btn-primary{display:inline-block;background:var(--gold);color:var(--g-deep);padding:15px 36px;border-radius:100px;font-weight:600;font-size:.9rem;letter-spacing:.05em;transition:all .3s;box-shadow:0 4px 20px rgba(200,168,75,.28);border:none;cursor:pointer}
+.btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,168,75,.38)}
+.btn-outline{display:inline-block;background:transparent;color:white;padding:15px 36px;border-radius:100px;font-weight:500;font-size:.9rem;border:1px solid rgba(255,255,255,.3);transition:all .3s;cursor:pointer}
+.btn-outline:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6)}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* Back button */
+.back-bar{padding:18px 28px;background:white;border-bottom:1px solid rgba(0,0,0,.06);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn-back{background:var(--g-deep);color:white;border:none;padding:9px 20px;border-radius:100px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:6px}
+.btn-back:hover{background:var(--g-mid);transform:translateY(-1px)}
+
+/* ============================================================
+   PAGE: INICIO
+============================================================ */
+#pg-inicio{
+  min-height:calc(100vh - 52px);
+  background:linear-gradient(135deg,var(--g-deep) 0%,#0f2412 55%,#1a3a1f 100%);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;position:relative;overflow:hidden;
+  padding:80px 28px 80px;
+}
+.hero-bg-radial{position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 60% at 20% 50%,rgba(76,175,96,.08) 0%,transparent 60%),
+  radial-gradient(ellipse 40% 40% at 80% 30%,rgba(200,168,75,.06) 0%,transparent 50%)}
+.hero-grid-lines{position:absolute;inset:0;background-image:
+  linear-gradient(rgba(200,168,75,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(200,168,75,.04) 1px,transparent 1px);
+  background-size:60px 60px}
+.hero-deco{position:absolute;font-size:7rem;opacity:.05;pointer-events:none;animation:floatD 7s ease-in-out infinite}
+.hero-deco:nth-child(3){top:12%;left:7%;animation-delay:0s}
+.hero-deco:nth-child(4){bottom:20%;right:7%;font-size:4.5rem;animation-delay:2.5s}
+.hero-deco:nth-child(5){top:55%;left:14%;font-size:3rem;animation-delay:5s}
+@keyframes floatD{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-22px) rotate(6deg)}}
+.hero-inner{position:relative;z-index:1;max-width:860px}
+.hero-badge{display:inline-block;border:1px solid rgba(200,168,75,.5);color:var(--gold-lt);padding:8px 24px;border-radius:100px;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:30px;animation:fadeUp .9s ease both}
+.hero-title{color:white;margin-bottom:18px;animation:fadeUp .9s .2s ease both}
+.hero-title em{color:var(--gold-lt);font-style:normal}
+
+/* Logo in hero */
+.hero-logo{width:130px;height:auto;margin:0 auto 20px;animation:fadeUp .9s .1s ease both;border-radius:10px}
+
+.hero-slogan{font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(255,255,255,.68);font-style:italic;min-height:2.5em;margin-bottom:46px;animation:fadeUp .9s .4s ease both}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s .6s ease both}
+.hero-pages-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:48px;animation:fadeUp .9s .8s ease both}
+.quick-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(200,168,75,.18);
+  border-radius:12px;padding:14px 18px;cursor:pointer;transition:all .3s;
+  color:white;font-size:.78rem;font-weight:500;display:flex;align-items:center;gap:8px;
+}
+.quick-card:hover{background:rgba(255,255,255,.14);border-color:rgba(200,168,75,.5);transform:translateY(-3px)}
+.qc-icon{font-size:1.1rem}
+
+/* ============================================================
+   PAGE: QUIÉNES SOMOS
+============================================================ */
+#pg-nosotros{background:var(--cream)}
+.nos-grid{display:grid;grid-template-columns:1fr 1.7fr;gap:60px;align-items:center}
+.nos-visual{
+  background:linear-gradient(135deg,var(--g-deep),#0f2412);
+  border-radius:var(--radius);padding:50px 28px;text-align:center;
+  color:white;
+}
+.nos-visual span{font-size:5rem;display:block;margin-bottom:18px}
+.nos-visual p{font-size:.78rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase}
+.mvv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.mvv-card{background:white;border-radius:12px;padding:20px;box-shadow:var(--sh)}
+.mvv-card h4{color:var(--g-deep);margin-bottom:8px}
+.mvv-card p{font-size:.84rem}
+.val-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.val-pill{background:var(--g-deep);color:var(--gold-lt);padding:6px 14px;border-radius:100px;font-size:.76rem;font-weight:500}
+
+/* ============================================================
+   PAGE: PRODUCTO
+============================================================ */
+#pg-producto{background:var(--cream)}
+.prod-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:start}
+.avo-card{background:white;border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh)}
+.avo-hero{background:linear-gradient(135deg,var(--g-deep),var(--g-mid));text-align:center;font-size:6rem;padding:44px}
+.avo-body{padding:28px}
+.avo-body h3{color:var(--g-deep);margin-bottom:10px}
+.avo-body p{font-size:.88rem;margin-bottom:20px}
+.specs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.spec-item{background:var(--cream);border-radius:10px;padding:12px 8px;text-align:center}
+.spec-item .sv{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--g-deep)}
+.spec-item .sl{font-size:.66rem;color:var(--txt-lt);margin-top:3px;text-transform:uppercase;letter-spacing:.06em}
+.ben-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ben-list li{display:flex;align-items:center;gap:10px;font-size:.84rem;color:var(--txt-mid)}
+.ben-list li::before{content:'✓';color:var(--g-light);font-weight:700;flex-shrink:0}
+.sizes-hdr{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--g-deep);margin-bottom:18px;font-weight:700}
+.size-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.size-card{
+  display:flex;align-items:center;gap:16px;
+  background:white;border:2px solid transparent;border-radius:14px;
+  padding:16px 20px;cursor:pointer;transition:all .25s;box-shadow:var(--sh);
+}
+.size-card:hover{border-color:var(--g-mid);transform:translateX(4px)}
+.size-card.sel{border-color:var(--g-light);background:rgba(76,175,96,.04)}
+.size-icon{font-size:1.8rem}
+.size-info h4{color:var(--g-deep);font-size:.9rem}
+.size-info p{font-size:.76rem;color:var(--txt-lt)}
+.size-price{margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);font-weight:700}
+.qty-row{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.qty-btn{width:36px;height:36px;border-radius:50%;background:var(--g-deep);color:white;border:none;font-size:1.1rem;cursor:pointer;transition:all .2s}
+.qty-btn:hover{background:var(--g-mid)}
+#qty-num{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--g-deep);min-width:28px;text-align:center}
+.qty-lbl{font-size:.82rem;color:var(--txt-lt)}
+.btn-add{width:100%;background:var(--g-deep);color:white;border:none;padding:15px;border-radius:12px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;letter-spacing:.04em}
+.btn-add:hover{background:var(--g-mid)}
+.add-toast{display:none;background:var(--g-light);color:white;padding:12px 20px;border-radius:10px;text-align:center;font-weight:600;margin-top:14px;animation:pgIn .3s ease}
+
+/* Pricing table */
+#pg-exportacion{background:var(--g-deep);color:white}
+#pg-exportacion .sec-label{color:var(--gold-lt)}
+#pg-exportacion .sec-title{color:white}
+#pg-exportacion p{color:rgba(255,255,255,.72)}
+.exp-steps{display:flex;gap:0;margin:42px 0;overflow-x:auto}
+.exp-step{
+  flex:1;min-width:140px;
+  background:rgba(255,255,255,.05);border-right:1px solid rgba(200,168,75,.12);
+  padding:28px 20px;text-align:center;transition:all .3s;
+}
+.exp-step:last-child{border-right:none}
+.exp-step:hover{background:rgba(255,255,255,.1)}
+.es-num{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);opacity:.4;font-weight:700}
+.es-icon{font-size:2.2rem;margin:10px 0 12px}
+.es-title{font-weight:700;font-size:.84rem;color:white;margin-bottom:8px}
+.es-desc{font-size:.76rem;color:rgba(255,255,255,.52);line-height:1.55}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:16px}
+.price-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(200,168,75,.18);
+  border-radius:16px;padding:30px 24px;text-align:center;transition:all .3s;
+}
+.price-card:hover,.price-card.feat{background:rgba(200,168,75,.1);border-color:var(--gold)}
+.pc-tons{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold-lt);line-height:1;font-weight:700}
+.pc-tons span{font-size:1.2rem;margin-left:4px}
+.pc-lbl{font-size:.78rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.1em;margin:6px 0 14px}
+.pc-days{font-size:.84rem;color:rgba(255,255,255,.65);margin-bottom:12px}
+.pc-usd{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:white;font-weight:700}
+
+/* ============================================================
+   PAGE: MERCADO
+============================================================ */
+#pg-mercado{background:var(--cream)}
+.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.clients-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.client-badge{background:white;border-radius:12px;padding:16px;text-align:center;box-shadow:var(--sh);transition:all .3s}
+.client-badge:hover{transform:translateY(-3px);box-shadow:var(--sh-hv)}
+.cbi{font-size:2rem;margin-bottom:8px}
+.client-badge p{font-size:.78rem;font-weight:500;color:var(--g-deep)}
+.super-chips{display:flex;flex-wrap:wrap;gap:8px}
+.super-chip{background:var(--g-deep);color:var(--gold-lt);padding:6px 14px;border-radius:100px;font-size:.78rem;font-weight:600}
+.berlin-card{background:linear-gradient(135deg,var(--g-deep),#0f2412);border-radius:var(--radius);padding:40px 32px;color:white;text-align:center}
+.berlin-city{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--gold-lt);font-weight:300;letter-spacing:.08em}
+.berlin-sub{font-size:.78rem;color:rgba(255,255,255,.45);letter-spacing:.18em;text-transform:uppercase;margin-bottom:32px}
+.berlin-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bs{background:rgba(255,255,255,.07);border-radius:12px;padding:18px 12px}
+.bv{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold-lt);font-weight:700}
+.bl{font-size:.7rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+
+/* ============================================================
+   PAGE: VIDEO
+============================================================ */
+#pg-video{background:var(--g-deep)}
+#pg-video .sec-label{color:var(--gold-lt)}
+#pg-video .sec-title{color:white}
+#pg-video p{color:rgba(255,255,255,.65)}
+.video-wrap{max-width:680px;margin:44px auto 0;background:rgba(255,255,255,.06);border-radius:18px;overflow:hidden;border:1px solid rgba(200,168,75,.16)}
+.video-inner{padding:70px 40px;text-align:center}
+.play-ring{width:82px;height:82px;border:2px solid var(--gold-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.8rem;color:var(--gold-lt);cursor:pointer;transition:all .3s}
+.play-ring:hover{background:rgba(200,168,75,.15);transform:scale(1.06)}
+.video-ph p{font-size:.88rem;font-style:italic;color:rgba(255,255,255,.5)}
+
+/* ============================================================
+   PAGE: RASTREO
+============================================================ */
+#pg-rastreo{background:var(--cream)}
+.rastreo-flow{display:flex;gap:0;margin:42px 0;overflow-x:auto}
+.r-step{
+  flex:1;min-width:130px;text-align:center;position:relative;
+  padding:26px 16px;
+}
+.r-step::after{
+  content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);
+  font-size:1.2rem;color:var(--gold);z-index:1;
+}
+.r-step:last-child::after{display:none}
+.r-icon{font-size:2.2rem;margin-bottom:12px}
+.r-step h4{color:var(--g-deep);font-size:.88rem;margin-bottom:6px}
+.r-step p{font-size:.76rem;color:var(--txt-lt)}
+.rastreo-tracker{background:white;border-radius:var(--radius);padding:36px;box-shadow:var(--sh);max-width:640px;margin:0 auto}
+.tracker-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--g-deep);margin-bottom:20px;font-weight:700}
+.tracker-input-row{display:flex;gap:12px;margin-bottom:24px}
+.tracker-input{flex:1;border:2px solid rgba(0,0,0,.1);border-radius:10px;padding:12px 16px;font-size:.88rem;font-family:'DM Sans',sans-serif;transition:border-color .2s}
+.tracker-input:focus{outline:none;border-color:var(--g-mid)}
+.btn-track{background:var(--g-deep);color:white;border:none;padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;transition:all .3s;font-size:.86rem;white-space:nowrap}
+.btn-track:hover{background:var(--g-mid)}
+.tracker-result{display:none;animation:pgIn .4s ease both}
+.track-timeline{display:flex;flex-direction:column;gap:14px}
+.tl-item{display:flex;align-items:flex-start;gap:16px}
+.tl-dot{
+  width:34px;height:34px;border-radius:50%;background:var(--g-light);
+  color:white;font-size:.78rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 2px 10px rgba(76,175,96,.35);
+}
+.tl-dot.done{background:var(--g-light)}
+.tl-dot.current{background:var(--gold);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,168,75,.4)}50%{box-shadow:0 0 0 8px rgba(200,168,75,0)}}
+.tl-text h5{color:var(--g-deep);font-size:.88rem;margin-bottom:3px}
+.tl-text p{font-size:.78rem;color:var(--txt-lt)}
+
+/* Delivery time by country */
+.delivery-table{width:100%;margin-top:32px;border-collapse:collapse;border-radius:12px;overflow:hidden;box-shadow:var(--sh)}
+.delivery-table th{background:var(--g-deep);color:var(--gold-lt);padding:12px 16px;text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+.delivery-table td{padding:12px 16px;font-size:.84rem;border-bottom:1px solid rgba(0,0,0,.06);background:white;color:var(--txt-mid)}
+.delivery-table tr:last-child td{border-bottom:none}
+.delivery-table .flag{font-size:1.2rem;margin-right:6px}
+
+/* ============================================================
+   PAGE: ENVÍO
+============================================================ */
+#pg-envio{background:var(--cream)}
+.ship-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ship-card{background:white;border-radius:16px;padding:28px 20px;text-align:center;box-shadow:var(--sh);transition:all .3s}
+.ship-card:hover{transform:translateY(-4px);box-shadow:var(--sh-hv)}
+.ship-flag{font-size:2.8rem;margin-bottom:12px}
+.ship-country{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--g-deep);margin-bottom:8px;font-weight:600}
+.ship-price{font-weight:700;color:var(--gold);margin-bottom:6px;font-size:.9rem}
+.ship-days{font-size:.76rem;color:var(--txt-lt)}
+.ship-note{background:white;border-radius:14px;padding:22px 24px;margin-top:28px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--sh)}
+.ship-note .sni{font-size:1.4rem;flex-shrink:0}
+.ship-note p{font-size:.84rem}
+
+/* ============================================================
+   PAGE: CONTACTO
+============================================================ */
+#pg-contacto{background:var(--g-deep);position:relative;overflow:hidden}
+#pg-contacto::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 30% 50%,rgba(76,175,96,.07) 0%,transparent 60%)}
+#pg-contacto .sec-label{color:var(--gold-lt)}
+#pg-contacto .sec-title{color:white}
+.con-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;position:relative;z-index:1}
+.con-channels{display:flex;flex-direction:column;gap:18px}
+.con-ch{
+  background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.14);
+  border-radius:14px;padding:22px;display:flex;align-items:center;gap:18px;
+  color:white;transition:all .3s;cursor:pointer;
+}
+.con-ch:hover{background:rgba(255,255,255,.1);border-color:var(--gold);transform:translateX(6px)}
+.con-ch .chi{font-size:1.9rem}
+.con-ch .chl{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:3px}
+.con-ch .chv{font-weight:500;font-size:.9rem;color:rgba(255,255,255,.88)}
+.loc-block{display:flex;align-items:center;gap:12px;margin-top:28px;color:rgba(255,255,255,.55);font-size:.84rem}
+.loc-block .li{font-size:1.4rem}
+.loc-block strong{color:var(--gold-lt);display:block;margin-bottom:2px}
+.con-form{background:rgba(255,255,255,.05);border:1px solid rgba(200,168,75,.14);border-radius:var(--radius);padding:34px}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:7px}
+.fg input,.fg textarea,.fg select{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:10px;padding:13px 15px;color:white;
+  font-family:'DM Sans',sans-serif;font-size:.88rem;
+  transition:border-color .2s;appearance:none;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{outline:none;border-color:var(--gold)}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.28)}
+.fg select option{background:var(--g-deep)}
+.fg textarea{resize:vertical;min-height:95px}
+.btn-send{width:100%;background:var(--gold);color:var(--g-deep);border:none;padding:15px;border-radius:12px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:.08em;text-transform:uppercase}
+.btn-send:hover{background:var(--gold-lt);transform:translateY(-1px)}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.site-footer{background:#0a1a0c;padding:28px 24px;text-align:center;color:rgba(255,255,255,.28);font-size:.78rem}
+.site-footer span{color:var(--gold)}
+.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:16px}
+.footer-nav button{background:none;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:.74rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;padding:6px 14px;border-radius:100px}
+.footer-nav button:hover{color:var(--gold-lt);border-color:rgba(200,168,75,.4)}
+.footer-home-btn{background:var(--g-deep)!important;color:var(--gold-lt)!important;border-color:var(--gold)!important;font-weight:600!important}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:780px){
+  .nos-grid,.prod-grid,.mkt-grid,.con-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .mvv-grid{grid-template-columns:1fr}
+  .rastreo-flow{flex-direction:column;align-items:center}
+  .r-step::after{content:'↓';right:auto;left:50%;top:auto;bottom:-8px}
+  #cart-sidebar{width:100%;right:-100%}
+  .section-wrap{padding:50px 20px}
+  .hero-pages-nav{display:none}
+  .ship-grid{grid-template-columns:1fr 1fr}
+  #top-nav{padding:0 160px 0 52px;gap:0}
+  .top-nav-link{font-size:.64rem;padding:5px 6px}
+}
+@media(max-width:520px){
+  .ship-grid{grid-template-columns:1fr}
+  #top-nav .top-nav-link span.tnl-text{display:none}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   COUNTRY SHIPPING SELECTOR (en página producto)
+============================================================ */
+.ship-selector-wrap{
+  background:white;border-radius:var(--radius);padding:22px 24px;
+  box-shadow:var(--sh);margin-bottom:18px;
+  border:2px solid rgba(200,168,75,.18);
+}
+.ship-selector-label{
+  font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--g-deep);
+  font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.ship-country-select{
+  width:100%;background:var(--cream);border:1.5px solid rgba(26,58,31,.18);
+  border-radius:10px;padding:10px 14px;font-size:.86rem;font-family:'DM Sans',sans-serif;
+  color:var(--txt-dark);cursor:pointer;transition:border-color .2s;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d6a35' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;
+}
+.ship-country-select:focus{outline:none;border-color:var(--g-mid)}
+.ship-cost-display{
+  display:none;margin-top:14px;background:linear-gradient(135deg,var(--g-deep),#0f2412);
+  border-radius:12px;padding:16px 18px;color:white;
+}
+.ship-cost-display.show{display:block;animation:pgIn .3s ease both}
+.scd-country{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:4px}
+.scd-cost{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:white;font-weight:700;margin-bottom:2px}
+.scd-days{font-size:.78rem;color:rgba(255,255,255,.6)}
+.scd-route{font-size:.73rem;color:rgba(255,255,255,.45);margin-top:2px}
+
+/* Cart shipping row */
+.cb-ship-row{
+  display:flex;justify-content:space-between;padding:6px 0;
+  border-bottom:1px solid rgba(0,0,0,.06);color:var(--g-mid);font-weight:600;
+}
+.cb-ship-row span:first-child{display:flex;align-items:center;gap:4px}
+
+/* Tracking country selector */
+.trk-country-wrap{
+  background:white;border-radius:14px;padding:18px 22px;
+  box-shadow:var(--sh);margin-bottom:22px;border:2px solid rgba(200,168,75,.15);
+}
+.trk-country-label{
+  font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--g-mid);font-weight:600;margin-bottom:8px;
+}
+.trk-country-select{
+  width:100%;background:var(--cream);border:1.5px solid rgba(26,58,31,.18);
+  border-radius:10px;padding:10px 14px;font-size:.86rem;font-family:'DM Sans',sans-serif;
+  color:var(--txt-dark);cursor:pointer;transition:border-color .2s;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d6a35' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;
+}
+.trk-country-select:focus{outline:none;border-color:var(--g-mid)}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR (top right) -->
+<div id="lang-bar">
+  <button class="lang-btn active" onclick="setLang('es',this)">ES</button>
+  <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+  <button class="lang-btn" onclick="setLang('de',this)">DE</button>
+  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+</div>
+
+<!-- HAMBURGER (top-left) -->
+<button id="nav-toggle" onclick="toggleNav()" aria-label="Menú">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- TOP NAV BAR — vacío, navegación solo por menú hamburguesa -->
+<nav id="top-nav"></nav>
+
+<!-- SIDE NAV (full menu slide-out) -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<nav id="side-nav">
+  <div class="nav-logo-block">
+    <!-- Logo image embedded as base64 placeholder; will show company name if image not found -->
+    <img src="Aguacate1.jpg" alt="Green Gold Colombia Logo" onerror="this.style.display='none'" id="side-logo">
+    <strong>Green Gold Colombia</strong>
+    <small data-i18n="nav_sub">Aguacate Hass Premium · Tolima</small>
+  </div>
+  <button class="nav-link active" data-page="inicio" onclick="goTo('inicio',this)"><span>🏠</span><span data-i18n="nav_inicio">Inicio</span></button>
+  <button class="nav-link" data-page="nosotros" onclick="goTo('nosotros',this)"><span>🌱</span><span data-i18n="nav_nosotros">Quiénes Somos</span></button>
+  <button class="nav-link" data-page="producto" onclick="goTo('producto',this)"><span>🥑</span><span data-i18n="nav_producto">Nuestro Producto</span></button>
+  <button class="nav-link" data-page="exportacion" onclick="goTo('exportacion',this)"><span>📦</span><span data-i18n="nav_exportacion">Exportación</span></button>
+  <button class="nav-link" data-page="mercado" onclick="goTo('mercado',this)"><span>🌍</span><span data-i18n="nav_mercado">Mercado Internacional</span></button>
+  <button class="nav-link" data-page="video" onclick="goTo('video',this)"><span>🎬</span><span data-i18n="nav_video">Nuestro Cultivo</span></button>
+  <button class="nav-link" data-page="rastreo" onclick="goTo('rastreo',this)"><span>📡</span><span data-i18n="nav_rastreo">Rastreo</span></button>
+  <button class="nav-link" data-page="envio" onclick="goTo('envio',this)"><span>🚢</span><span data-i18n="nav_envio">Envío Internacional</span></button>
+  <button class="nav-link" data-page="contacto" onclick="goTo('contacto',this)"><span>📩</span><span data-i18n="nav_contacto">Contacto</span></button>
+</nav>
+
+<!-- APP CONTAINER -->
+<div id="app">
+
+  <!-- ======== INICIO ======== -->
+  <div id="pg-inicio" class="page active">
+    <div class="hero-bg-radial"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-deco">🥑</div>
+    <div class="hero-deco">🌿</div>
+    <div class="hero-deco">🥑</div>
+    <div class="hero-inner">
+      <div class="hero-badge" data-i18n="hero_badge">🌎 Exportación · Colombia → Europa</div>
+      <img class="hero-logo" src="Aguacate1.jpg" alt="Green Gold Colombia" 
+        style="width:260px;" 
+        onerror="this.style.display='none'">
+      <h1 class="hero-title">Green <em>Gold</em><br>Colombia</h1>
+      <!-- Logo below company name in hero -->
+      <p class="hero-slogan" id="slogan-text"></p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="goTo('producto')">
+          <span data-i18n="hero_cta1">Ver Producto</span>
+        </button>
+        <button class="btn-outline" onclick="goTo('contacto')">
+          <span data-i18n="hero_cta2">Contactar</span>
+        </button>
+      </div>
+      <div class="hero-pages-nav">
+        <div class="quick-card" onclick="goTo('exportacion')"><span class="qc-icon">📦</span><span data-i18n="nav_exportacion">Exportación</span></div>
+        <div class="quick-card" onclick="goTo('mercado')"><span class="qc-icon">🌍</span><span data-i18n="nav_mercado">Mercado</span></div>
+        <div class="quick-card" onclick="goTo('rastreo')"><span class="qc-icon">📡</span><span data-i18n="nav_rastreo">Rastreo</span></div>
+        <div class="quick-card" onclick="goTo('contacto')"><span class="qc-icon">📩</span><span data-i18n="nav_contacto">Contacto</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== QUIENES SOMOS ======== -->
+  <div id="pg-nosotros" class="page">
+    <div class="back-bar">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <div class="nos-grid reveal">
+        <div class="nos-visual">
+          <img src="Aguacate1.jpg">
+          <p data-i18n="nos_cap">Tolima, Colombia · Finca propia</p>
+        </div>
+        <div>
+          <span class="sec-label" data-i18n="nos_label">Quiénes Somos</span>
+          <h2 class="sec-title" data-i18n="nos_title">Del Tolima&#10;al mundo</h2>
+          <div class="gold-line"></div>
+          <p data-i18n="nos_desc">Somos una empresa colombiana especializada en la producción, selección, empaque y exportación de Aguacate Hass premium. Desde las fértiles tierras del Tolima conectamos agricultores con los mercados europeos.</p>
+          <div class="mvv-grid">
+            <div class="mvv-card">
+              <h4 data-i18n="mis_t">Misión</h4>
+              <p data-i18n="mis_d">Exportar aguacate Hass colombiano de calidad premium, conectando agricultores con los mejores mercados de Europa.</p>
+            </div>
+            <div class="mvv-card">
+              <h4 data-i18n="vis_t">Visión</h4>
+              <p data-i18n="vis_d">Ser el proveedor líder de aguacate Hass colombiano en el mercado europeo para 2030.</p>
+            </div>
+          </div>
+          <div class="val-pills">
+            <span class="val-pill" data-i18n="v1">🌱 Sostenibilidad</span>
+            <span class="val-pill" data-i18n="v2">✅ Calidad</span>
+            <span class="val-pill" data-i18n="v3">🤝 Confianza</span>
+            <span class="val-pill" data-i18n="v4">📦 Trazabilidad</span>
+            <span class="val-pill" data-i18n="v5">🌍 Responsabilidad</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== PRODUCTO ======== -->
+  <div id="pg-producto" class="page">
+    <div class="back-bar">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <div style="text-align:center;margin-bottom:52px" class="reveal">
+        <span class="sec-label" data-i18n="prod_lbl">Nuestro Producto</span>
+        <h2 class="sec-title" data-i18n="prod_title">Aguacate Hass&#10;Premium</h2>
+        <div class="gold-line center"></div>
+      </div>
+      <div class="prod-grid reveal">
+        <div class="avo-card">
+          <div class="nos-visual"> 
+            <img src="Aguacate1.jpg">
+          </div>
+          <div class="avo-body">
+            <h3 data-i18n="prod_ct">Aguacate Hass Colombiano</h3>
+            <p data-i18n="prod_cd">Cultivado en las altitudes ideales del Tolima, nuestro aguacate Hass presenta pulpa cremosa, sabor excepcional y vida útil superior.</p>
+            <div class="specs-grid">
+              <div class="spec-item"><div class="sv">Hass</div><div class="sl" data-i18n="sp1">Variedad</div></div>
+              <div class="spec-item"><div class="sv">Tolima</div><div class="sl" data-i18n="sp2">Origen</div></div>
+              <div class="spec-item"><div class="sv">BPA</div><div class="sl" data-i18n="sp3">Certificación</div></div>
+              <div class="spec-item"><div class="sv">12°C</div><div class="sl" data-i18n="sp4">T° Envío</div></div>
+            </div>
+            <ul class="ben-list">
+              <li data-i18n="b1">Rico en grasas saludables (Omega 9)</li>
+              <li data-i18n="b2">Alto contenido de vitaminas B, C, E y K</li>
+              <li data-i18n="b3">Libre de pesticidas · Producción responsable</li>
+              <li data-i18n="b4">Calibres S, M, L disponibles</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <!-- SELECTOR DE PAÍS Y COSTO DE ENVÍO -->
+          <div class="ship-selector-wrap">
+            <div class="ship-selector-label">🌍 <span data-i18n="ship_sel_label">Selecciona tu País de Destino</span></div>
+            <select class="ship-country-select" id="ship-country-sel" onchange="updateShippingCost()">
+              <option value="">— Elige tu país —</option>
+              <option value="de">🇩🇪 Alemania / Germany / Deutschland</option>
+              <option value="nl">🇳🇱 Países Bajos / Netherlands / Niederlande</option>
+              <option value="es">🇪🇸 España / Spain / Spanien</option>
+              <option value="fr">🇫🇷 Francia / France / Frankreich</option>
+              <option value="uk">🇬🇧 Reino Unido / United Kingdom</option>
+              <option value="cn">🇨🇳 China / 中国</option>
+              <option value="jp">🇯🇵 Japón / Japan / 日本</option>
+              <option value="us">🇺🇸 Estados Unidos / United States</option>
+              <option value="mx">🇲🇽 México / Mexico</option>
+              <option value="br">🇧🇷 Brasil / Brazil / Brasilien</option>
+              <option value="ca">🇨🇦 Canadá / Canada</option>
+              <option value="au">🇦🇺 Australia</option>
+            </select>
+            <div class="ship-cost-display" id="ship-cost-display">
+              <div class="scd-country" id="scd-country"></div>
+              <div class="scd-cost" id="scd-cost"></div>
+              <div class="scd-days" id="scd-days"></div>
+              <div class="scd-route" id="scd-route"></div>
+            </div>
+          </div>
+          <div class="sizes-hdr" data-i18n="sizes_t">Elige tu Caja</div>
+          <div class="size-cards">
+            <div class="size-card" onclick="selSize(this,'Caja Pequeña 4kg','Small Box 4kg','Kleine Kiste 4kg','小箱 4kg',18)">
+              <div class="size-icon">🥑</div>
+              <div class="size-info"><h4 data-i18n="sz_s">Pequeño</h4><p>4 kg · ~8 unidades</p></div>
+              <div class="size-price">$18.00</div>
+            </div>
+            <div class="size-card sel" onclick="selSize(this,'Caja Mediana 10kg','Medium Box 10kg','Mittlere Kiste 10kg','中箱 10kg',38)">
+              <div class="size-icon">🥑🥑</div>
+              <div class="size-info"><h4 data-i18n="sz_m">Mediano</h4><p>10 kg · ~20 unidades</p></div>
+              <div class="size-price">$38.00</div>
+            </div>
+            <div class="size-card" onclick="selSize(this,'Caja Grande 20kg','Large Box 20kg','Große Kiste 20kg','大箱 20kg',70)">
+              <div class="size-icon">🥑🥑🥑</div>
+              <div class="size-info"><h4 data-i18n="sz_l">Grande</h4><p>20 kg · ~40 unidades</p></div>
+              <div class="size-price">$70.00</div>
+            </div>
+          </div>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="chQty(-1)">−</button>
+            <span id="qty-num">1</span>
+            <button class="qty-btn" onclick="chQty(1)">+</button>
+            <span class="qty-lbl" data-i18n="cajas">cajas</span>
+          </div>
+          <button class="btn-add" onclick="addCart()" data-i18n="btn_cart">🛒 Añadir al Carrito</button>
+          <div class="add-toast" id="add-toast" data-i18n="cart_ok">✅ ¡Añadido al carrito!</div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== EXPORTACION ======== -->
+  <div id="pg-exportacion" class="page">
+    <div class="back-bar" style="background:rgba(26,58,31,.7);border-bottom-color:rgba(200,168,75,.15)">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <span class="sec-label" data-i18n="exp_lbl">Proceso de Exportación</span>
+      <h2 class="sec-title" data-i18n="exp_title">Del campo&#10;a su mesa</h2>
+      <div class="gold-line"></div>
+      <div class="exp-steps reveal">
+        <div class="exp-step"><div class="es-num">01</div><div class="es-icon">🌱</div><div class="es-title" data-i18n="e1t">Producción</div><div class="es-desc" data-i18n="e1d">Cultivo responsable con control de calidad desde la finca en Tolima</div></div>
+        <div class="exp-step"><div class="es-num">02</div><div class="es-icon">🔍</div><div class="es-title" data-i18n="e2t">Selección</div><div class="es-desc" data-i18n="e2d">Clasificación rigurosa por calibre, madurez y estándares internacionales</div></div>
+        <div class="exp-step"><div class="es-num">03</div><div class="es-icon">📦</div><div class="es-title" data-i18n="e3t">Empaque</div><div class="es-desc" data-i18n="e3d">Empaque especializado para conservar la frescura</div></div>
+        <div class="exp-step"><div class="es-num">04</div><div class="es-icon">❄️</div><div class="es-title" data-i18n="e4t">Cadena Frío</div><div class="es-desc" data-i18n="e4d">Transporte refrigerado a 12°C</div></div>
+        <div class="exp-step"><div class="es-num">05</div><div class="es-icon">🚢</div><div class="es-title" data-i18n="e5t">Logística</div><div class="es-desc" data-i18n="e5d">Envío directo a Berlín con seguimiento en tiempo real</div></div>
+      </div>
+      <div style="text-align:center;margin:60px 0 32px">
+        <span class="sec-label" data-i18n="price_lbl">Precios de Exportación</span>
+        <h3 style="color:var(--gold-lt);font-family:'Cormorant Garamond',serif;margin-top:8px" data-i18n="price_sub">Volúmenes y tiempos de entrega</h3>
+      </div>
+      <div class="pricing-grid reveal">
+        <div class="price-card">
+          <div class="pc-tons">1<span>T</span></div>
+          <div class="pc-lbl" data-i18n="ton">Tonelada</div>
+          <div class="pc-days">⏱ 45 <span data-i18n="dias">días</span></div>
+          <div class="pc-usd">USD 3,200</div>
+        </div>
+        <div class="price-card feat">
+          <div class="pc-tons">5<span>T</span></div>
+          <div class="pc-lbl" data-i18n="tons">Toneladas</div>
+          <div class="pc-days">⏱ 30 <span data-i18n="dias">días</span></div>
+          <div class="pc-usd">USD 16,000</div>
+        </div>
+        <div class="price-card">
+          <div class="pc-tons">10<span>T</span></div>
+          <div class="pc-lbl" data-i18n="tons">Toneladas</div>
+          <div class="pc-days">⏱ 25 <span data-i18n="dias">días</span></div>
+          <div class="pc-usd">USD 32,000</div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer" style="position:relative;z-index:1"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== MERCADO ======== -->
+  <div id="pg-mercado" class="page">
+    <div class="back-bar">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <div class="mkt-grid reveal">
+        <div>
+          <span class="sec-label" data-i18n="mkt_lbl">Mercado Internacional</span>
+          <h2 class="sec-title" data-i18n="mkt_title">Berlín,&#10;nuestro destino</h2>
+          <div class="gold-line"></div>
+          <p data-i18n="mkt_d">Nos enfocamos en el mercado alemán, donde la demanda de aguacate premium crece año a año.</p>
+          <div class="clients-grid">
+            <div class="client-badge"><div class="cbi">🏭</div><p data-i18n="c1">Importadores de Frutas</p></div>
+            <div class="client-badge"><div class="cbi">🛒</div><p data-i18n="c2">Supermercados</p></div>
+            <div class="client-badge"><div class="cbi">🥗</div><p data-i18n="c3">Restaurantes Saludables</p></div>
+            <div class="client-badge"><div class="cbi">🌿</div><p data-i18n="c4">Tiendas Orgánicas</p></div>
+          </div>
+          <div style="margin-top:28px">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--g-deep);margin-bottom:12px" data-i18n="sup_t">Cadenas objetivo en Alemania</p>
+            <div class="super-chips">
+              <span class="super-chip">Aldi</span>
+              <span class="super-chip">Lidl</span>
+              <span class="super-chip">Edeka</span>
+              <span class="super-chip">Rewe</span>
+            </div>
+          </div>
+        </div>
+        <div class="berlin-card">
+          <div class="berlin-city">Berlin</div>
+          <div class="berlin-sub">Deutschland · Alemania</div>
+          <div class="berlin-stats">
+            <div class="bs"><div class="bv">3.6M</div><div class="bl" data-i18n="bs1">Habitantes</div></div>
+            <div class="bs"><div class="bv">+40%</div><div class="bl" data-i18n="bs2">Crecimiento mercado</div></div>
+            <div class="bs"><div class="bv">#1</div><div class="bl" data-i18n="bs3">Destino exportación</div></div>
+            <div class="bs"><div class="bv">€2.1B</div><div class="bl" data-i18n="bs4">Mercado orgánico</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== VIDEO ======== -->
+  <div id="pg-video" class="page">
+    <div class="back-bar" style="background:rgba(26,58,31,.7);border-bottom-color:rgba(200,168,75,.15)">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap" style="text-align:center">
+      <span class="sec-label" data-i18n="vid_lbl">Conócenos</span>
+      <h2 class="sec-title" data-i18n="vid_title">Así nace nuestro&#10;aguacate</h2>
+      <div class="gold-line center"></div>
+      <p style="max-width:520px;margin:0 auto" data-i18n="vid_d">Del corazón del Tolima, te mostramos el proceso de cultivo y cosecha del Aguacate Hass.</p>
+      <div class="video-wrap reveal" onclick="playVideo()">
+        <div class="video-inner" id="videoContainer">
+          <div class="play-ring">▶</div>
+          <p>Cultivo · Aguacate Hass · Tolima, Colombia</p>
+        </div>
+</div>
+    </div>
+    <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== RASTREO ======== -->
+  <div id="pg-rastreo" class="page">
+    <div class="back-bar">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <div style="text-align:center" class="reveal">
+        <span class="sec-label" data-i18n="trk_lbl">Rastreo</span>
+        <h2 class="sec-title" data-i18n="trk_title">Control paso a paso</h2>
+        <div class="gold-line center"></div>
+        <p style="max-width:500px;margin:0 auto 0" data-i18n="trk_d">Seguimiento en tiempo real desde la finca hasta la puerta del cliente.</p>
+      </div>
+      <div class="rastreo-flow reveal">
+        <div class="r-step"><div class="r-icon">📋</div><h4 data-i18n="r1">Pedido Recibido</h4><p data-i18n="r1d">Confirmación inmediata</p></div>
+        <div class="r-step"><div class="r-icon">🌱</div><h4 data-i18n="r2">Selección</h4><p data-i18n="r2d">Premium Hass escogido</p></div>
+        <div class="r-step"><div class="r-icon">📦</div><h4 data-i18n="r3">Empaque</h4><p data-i18n="r3d">Caja certificada</p></div>
+        <div class="r-step"><div class="r-icon">🚢</div><h4 data-i18n="r4">Despacho</h4><p data-i18n="r4d">Envío internacional</p></div>
+        <div class="r-step"><div class="r-icon">✅</div><h4 data-i18n="r5">Entregado</h4><p data-i18n="r5d">Rastreo activo</p></div>
+      </div>
+
+      <!-- Delivery times by country -->
+      <h3 style="color:var(--g-deep);margin-bottom:16px;font-family:'Cormorant Garamond',serif" data-i18n="delivery_title">Tiempos de Entrega por País</h3>
+      <p style="margin-bottom:16px;font-size:.84rem" data-i18n="delivery_sub">Desde Tolima, Colombia (punto de origen) hasta el destino final:</p>
+      <table class="delivery-table">
+        <thead>
+          <tr>
+            <th data-i18n="del_country">País de Destino</th>
+            <th data-i18n="del_time">Tiempo Estimado</th>
+            <th data-i18n="del_route">Ruta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="flag">🇩🇪</span>Alemania</td><td>25–45 días</td><td>Bogotá → Hamburgo/Bremen</td></tr>
+          <tr><td><span class="flag">🇳🇱</span>Países Bajos</td><td>28–48 días</td><td>Bogotá → Rotterdam</td></tr>
+          <tr><td><span class="flag">🇪🇸</span>España</td><td>22–40 días</td><td>Bogotá → Barcelona/Valencia</td></tr>
+          <tr><td><span class="flag">🇫🇷</span>Francia</td><td>26–45 días</td><td>Bogotá → Le Havre</td></tr>
+          <tr><td><span class="flag">🇬🇧</span>Reino Unido</td><td>28–50 días</td><td>Bogotá → Felixstowe</td></tr>
+          <tr><td><span class="flag">🇨🇳</span>China</td><td>35–60 días</td><td>Bogotá → Shanghai/Shenzhen</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Selector de país para rastreo -->
+      <div class="trk-country-wrap reveal">
+        <div class="trk-country-label">🌍 País de destino de tu pedido</div>
+        <select class="trk-country-select" id="trk-country-sel" onchange="updateTrackingCountry()">
+          <option value="">— Selecciona tu país para ver tiempos de rastreo —</option>
+          <option value="de">🇩🇪 Alemania / Germany</option>
+          <option value="nl">🇳🇱 Países Bajos / Netherlands</option>
+          <option value="es">🇪🇸 España / Spain</option>
+          <option value="fr">🇫🇷 Francia / France</option>
+          <option value="uk">🇬🇧 Reino Unido / United Kingdom</option>
+          <option value="cn">🇨🇳 China / 中国</option>
+          <option value="jp">🇯🇵 Japón / Japan / 日本</option>
+          <option value="us">🇺🇸 Estados Unidos / United States</option>
+          <option value="mx">🇲🇽 México / Mexico</option>
+          <option value="br">🇧🇷 Brasil / Brazil</option>
+          <option value="ca">🇨🇦 Canadá / Canada</option>
+          <option value="au">🇦🇺 Australia</option>
+        </select>
+        <div id="trk-country-info" style="display:none;margin-top:12px;background:var(--g-deep);border-radius:10px;padding:12px 16px;color:white;font-size:.82rem">
+          <div id="trk-country-name" style="color:var(--gold-lt);font-weight:700;margin-bottom:4px"></div>
+          <div id="trk-country-time" style="color:rgba(255,255,255,.8)"></div>
+          <div id="trk-country-route" style="color:rgba(255,255,255,.5);font-size:.74rem;margin-top:2px"></div>
+        </div>
+      </div>
+
+      <div class="rastreo-tracker reveal" style="margin-top:40px">
+        <div class="tracker-title" data-i18n="trk_sim">Simular Rastreo de Pedido</div>
+        <div class="tracker-input-row">
+          <input class="tracker-input" id="order-input" type="text" placeholder="Ej: GGC-2025-001">
+          <button class="btn-track" onclick="simTrack()" data-i18n="btn_track">Rastrear</button>
+        </div>
+        <div class="tracker-result" id="tracker-result">
+          <div class="track-timeline" id="dynamic-timeline">
+            <!-- Se genera dinámicamente según el país seleccionado -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== ENVIO ======== -->
+  <div id="pg-envio" class="page">
+    <div class="back-bar">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <div style="text-align:center;margin-bottom:48px" class="reveal">
+        <span class="sec-label" data-i18n="ship_lbl">Envío Internacional</span>
+        <h2 class="sec-title" data-i18n="ship_title">Costos por País</h2>
+        <div class="gold-line center"></div>
+        <p style="font-size:.88rem;max-width:500px;margin:0 auto" data-i18n="ship_origin">📍 Punto de origen: <strong>Tolima, Colombia</strong> — La mejor tierra para el Aguacate Hass.</p>
+      </div>
+      <div class="ship-grid reveal">
+        <div class="ship-card"><div class="ship-flag">🇩🇪</div><div class="ship-country">Alemania</div><div class="ship-price">USD 850 / T</div><div class="ship-days">25–45 días</div></div>
+        <div class="ship-card"><div class="ship-flag">🇳🇱</div><div class="ship-country">Países Bajos</div><div class="ship-price">USD 890 / T</div><div class="ship-days">28–48 días</div></div>
+        <div class="ship-card"><div class="ship-flag">🇪🇸</div><div class="ship-country">España</div><div class="ship-price">USD 780 / T</div><div class="ship-days">22–40 días</div></div>
+        <div class="ship-card"><div class="ship-flag">🇫🇷</div><div class="ship-country">Francia</div><div class="ship-price">USD 870 / T</div><div class="ship-days">26–45 días</div></div>
+        <div class="ship-card"><div class="ship-flag">🇬🇧</div><div class="ship-country">Reino Unido</div><div class="ship-price">USD 920 / T</div><div class="ship-days">28–50 días</div></div>
+        <div class="ship-card"><div class="ship-flag">🇨🇳</div><div class="ship-country">China</div><div class="ship-price" data-i18n="consult">Consultar</div><div class="ship-days">35–60 días</div></div>
+      </div>
+      <div class="ship-note reveal">
+        <span class="sni">📌</span>
+        <p data-i18n="ship_note"><strong>Nota:</strong> Precios referenciales por tonelada métrica. Para cotizaciones exactas contactenos.</p>
+      </div>
+    </div>
+    <div class="site-footer"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+  <!-- ======== CONTACTO ======== -->
+  <div id="pg-contacto" class="page">
+    <div class="back-bar" style="background:rgba(26,58,31,.7);border-bottom-color:rgba(200,168,75,.15)">
+      <button class="btn-back" onclick="goTo('inicio')">← <span data-i18n="back_home">Volver al Inicio</span></button>
+    </div>
+    <div class="section-wrap">
+      <span class="sec-label" data-i18n="con_lbl">Contacto</span>
+      <h2 class="sec-title" data-i18n="con_title">Hablemos de&#10;negocios</h2>
+      <div class="gold-line"></div>
+      <div class="con-grid reveal">
+        <div>
+          <div class="con-channels">
+            <!-- 1. WhatsApp -->
+            <a href="https://wa.me/573000000000" target="_blank" class="con-ch">
+              <span class="chi">💬</span>
+              <div><div class="chl">WhatsApp</div><div class="chv">+57 300 000 0000</div></div>
+            </a>
+            <!-- 2. Email -->
+            <a href="/cdn-cgi/l/email-protection#254c4b434a65425740404b424a4941464a494a48474c440b464a48" class="con-ch">
+              <span class="chi">📧</span>
+              <div><div class="chl" data-i18n="ch_email">Correo Electrónico</div><div class="chv"><span class="__cf_email__" data-cfemail="7d14131b123d1a0f1818131a1211191e121112101f141c531e1210">[email&#160;protected]</span></div></div>
+            </a>
+            <!-- 3. Teléfono directo -->
+            <a href="tel:+573000000001" class="con-ch">
+              <span class="chi">📞</span>
+              <div><div class="chl" data-i18n="ch_phone">Teléfono</div><div class="chv">+57 300 000 0001</div></div>
+            </a>
+          </div>
+          <div class="loc-block">
+            <span class="li">📍</span>
+            <div>
+              <strong data-i18n="loc_city">Tolima, Colombia</strong>
+              <span data-i18n="loc_d"> · Mejor tierra para Aguacate Hass · Exportación Internacional</span>
+            </div>
+          </div>
+        </div>
+        <!-- Contact Form -->
+        <div class="con-form">
+          <div class="fg"><label data-i18n="f1">Nombre / Empresa</label><input type="text" id="cf-name" placeholder="Tu empresa o nombre"></div>
+          <div class="fg"><label data-i18n="f2">Correo Electrónico</label><input type="email" id="cf-email" placeholder="correo@empresa.com"></div>
+          <div class="fg">
+            <label data-i18n="f3">País</label>
+            <select id="cf-country">
+              <option value="" data-i18n="f3opt">Selecciona tu país</option>
+              <option>Alemania</option><option>Países Bajos</option><option>España</option>
+              <option>Francia</option><option>Reino Unido</option><option>China</option><option>Otro</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label data-i18n="f4">Volumen Requerido</label>
+            <select id="cf-volume">
+              <option>1 Tonelada — USD 3,200 · 45 días</option>
+              <option>5 Toneladas — USD 16,000 · 30 días</option>
+              <option>10 Toneladas — USD 32,000 · 25 días</option>
+              <option>+10 Toneladas — Consultar</option>
+            </select>
+          </div>
+          <div class="fg"><label data-i18n="f5">Mensaje</label><textarea id="cf-message" placeholder="Cuéntanos sobre tu requerimiento..."></textarea></div>
+          <button class="btn-send" onclick="submitContact()" data-i18n="f_send">Enviar Solicitud →</button>
+        </div>
+      </div>
+    </div>
+    <div class="site-footer" style="position:relative;z-index:1"><p>© 2025 <span>Green Gold Colombia</span> · Tolima, Colombia</p></div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- CART BTN -->
+<button id="cart-btn" onclick="toggleCart()">
+  🛒<span id="cart-badge">0</span>
+</button>
+
+<!-- CART SIDEBAR -->
+<div id="cart-sidebar">
+  <div class="cart-hdr">
+    <h3>🛒 <span data-i18n="cart_t">Carrito</span></h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty-msg"><div class="ei">🥑</div><p data-i18n="cart_empty">Tu carrito está vacío</p></div>
+  </div>
+  <div class="cart-ftr">
+    <div class="cart-breakdown" id="cart-breakdown" style="display:none">
+      <div class="cart-summary-title">📋 <span data-i18n="cart_detail">Detalle de compra</span></div>
+      <!-- Selector de país para el carrito -->
+      <div style="margin-bottom:10px">
+        <select class="ship-country-select" id="cart-ship-country" onchange="refreshCart()" style="font-size:.78rem;padding:8px 12px">
+          <option value="">🌍 Selecciona país de envío</option>
+          <option value="de">🇩🇪 Alemania</option>
+          <option value="nl">🇳🇱 Países Bajos</option>
+          <option value="es">🇪🇸 España</option>
+          <option value="fr">🇫🇷 Francia</option>
+          <option value="uk">🇬🇧 Reino Unido</option>
+          <option value="cn">🇨🇳 China</option>
+          <option value="jp">🇯🇵 Japón</option>
+          <option value="us">🇺🇸 Estados Unidos</option>
+          <option value="mx">🇲🇽 México</option>
+          <option value="br">🇧🇷 Brasil</option>
+          <option value="ca">🇨🇦 Canadá</option>
+          <option value="au">🇦🇺 Australia</option>
+        </select>
+      </div>
+      <div id="breakdown-rows"></div>
+    </div>
+    <div class="cart-total-row">
+      <span data-i18n="cart_total">Total</span>
+      <span class="ct-price" id="ct-price">$0.00</span>
+    </div>
+    <button class="btn-checkout" onclick="checkoutOrder()" data-i18n="cart_co">Solicitar Pedido →</button>
+  </div>
+</div>
+
+<!-- ORDER CONFIRMATION MODAL -->
+<div id="order-modal">
+  <div class="order-modal-box">
+    <div class="om-icon">✅</div>
+    <h3 data-i18n="om_title">¡Pedido Enviado!</h3>
+    <p data-i18n="om_desc">Tu solicitud ha sido recibida. Nuestro equipo en Tolima, Colombia te contactará en menos de 24 horas.</p>
+    <div class="om-ref" id="om-ref">Ref: GGC-2025-001</div>
+    <button class="om-btn" onclick="closeOrderModal()" data-i18n="om_close">Cerrar</button>
+  </div>
+</div>
+
+<!-- CONTACT SUCCESS MODAL -->
+<div id="contact-modal">
+  <div class="order-modal-box">
+    <div class="om-icon">📩</div>
+    <h3 data-i18n="cm_title">¡Mensaje Enviado!</h3>
+    <p data-i18n="cm_desc">Gracias por contactarnos. Nos comunicaremos contigo pronto desde Tolima, Colombia.</p>
+    <button class="om-btn" onclick="document.getElementById('contact-modal').classList.remove('show')" data-i18n="om_close">Cerrar</button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ============================================================
+   PAGES
+============================================================ */
+const PAGES = ['inicio','nosotros','producto','exportacion','mercado','video','rastreo','envio','contacto'];
+
+function goTo(id, navEl) {
+  closeNav();
+
+  const current = document.querySelector('.page.active');
+  if (current && current.id !== 'pg-' + id) {
+    current.style.transition = 'opacity .3s ease, transform .3s ease';
+    current.style.opacity = '0';
+    current.style.transform = 'translateY(-24px)';
+    setTimeout(() => {
+      current.classList.remove('active');
+      current.style.opacity = '';
+      current.style.transform = '';
+      current.style.transition = '';
+
+      const pg = document.getElementById('pg-' + id);
+      if (pg) {
+        pg.style.opacity = '0';
+        pg.style.transform = 'translateY(40px)';
+        pg.style.transition = 'none';
+        pg.classList.add('active');
+        // Primero ir al tope
+        window.scrollTo({top: 0, behavior: 'instant'});
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            pg.style.transition = 'opacity .45s ease, transform .45s ease';
+            pg.style.opacity = '1';
+            pg.style.transform = 'translateY(0)';
+            setTimeout(() => {
+              pg.style.opacity = '';
+              pg.style.transform = '';
+              pg.style.transition = '';
+              triggerReveal();
+              // Deslizar hacia abajo para mostrar el contenido
+              const contenido = pg.querySelector('.section-wrap, .back-bar, .hero-inner');
+              if (contenido) {
+                contenido.scrollIntoView({behavior: 'smooth', block: 'start'});
+              }
+            }, 460);
+          });
+        });
+      }
+    }, 300);
+  } else if (!current) {
+    const pg = document.getElementById('pg-' + id);
+    if (pg) { pg.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  }
+
+  // update side nav active
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const activeLink = document.querySelector(`#side-nav .nav-link[data-page="${id}"]`);
+  if (activeLink) activeLink.classList.add('active');
+  // update top nav active
+  document.querySelectorAll('.top-nav-link').forEach(l => l.classList.remove('active'));
+  const activeTop = document.querySelector(`.top-nav-link[data-page="${id}"]`);
+  if (activeTop) activeTop.classList.add('active');
+
+  setTimeout(() => buildFooters(id), 320);
+}
+
+function buildFooters(current) {
+  const labels = {
+    inicio:['🏠','nav_inicio'], nosotros:['🌱','nav_nosotros'],
+    producto:['🥑','nav_producto'], exportacion:['📦','nav_exportacion'],
+    mercado:['🌍','nav_mercado'], video:['🎬','nav_video'],
+    rastreo:['📡','nav_rastreo'], envio:['🚢','nav_envio'], contacto:['📩','nav_contacto']
+  };
+  const fn = document.getElementById('fn-'+current);
+  if (!fn) return;
+  const t = T[curLang] || T['es'];
+  fn.innerHTML = ''; return; fn.innerHTML = `<button class="footer-home-btn" onclick="goTo('inicio')">🏠 ${t['nav_inicio'] || 'Inicio'}</button>` +
+    PAGES.filter(p=>p!==current && p!=='inicio').map(p=>
+      `<button onclick="goTo('${p}')">${labels[p][0]} ${t[labels[p][1]] || labels[p][1]}</button>`
+    ).join('');
+}
+
+/* ============================================================
+   NAV
+============================================================ */
+function toggleNav() {
+  document.getElementById('nav-toggle').classList.toggle('open');
+  document.getElementById('side-nav').classList.toggle('open');
+  document.getElementById('nav-overlay').classList.toggle('show');
+}
+function closeNav() {
+  document.getElementById('nav-toggle').classList.remove('open');
+  document.getElementById('side-nav').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('show');
+}
+
+/* ============================================================
+   SLOGAN ROTATION
+============================================================ */
+const SLOGANS = {
+  es:['"Del corazón del Tolima a las mesas de Europa."','"Aguacate Hass colombiano, calidad que cruza fronteras."','"Frescura natural de Colombia para el mundo."'],
+  en:['"From the heart of Tolima to the tables of Europe."','"Colombian Hass Avocado — quality that crosses borders."','"Natural freshness from Colombia to the world."'],
+  de:['"Aus dem Herzen Tolimas auf die Tische Europas."','"Kolumbianische Hass-Avocado – Qualität ohne Grenzen."','"Natürliche Frische aus Kolumbien für die Welt."'],
+  zh:['"从哥伦比亚托利马到欧洲的餐桌。"','"哥伦比亚哈斯牛油果，跨越国界的品质。"','"哥伦比亚的天然新鲜，奉献给世界。"']
+};
+let sloganIdx = 0;
+let curLang = 'es';
+
+function showSlogan() {
+  const el = document.getElementById('slogan-text');
+  if (!el) return;
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=SLOGANS[curLang][sloganIdx]; el.style.opacity=1; el.style.transition='opacity .5s'; },300);
+}
+showSlogan();
+
+/* ============================================================
+   TRANSLATIONS
+============================================================ */
+const T = {
+  es:{
+    nav_sub:"Aguacate Hass Premium · Tolima",nav_inicio:"Inicio",nav_nosotros:"Quiénes Somos",nav_producto:"Nuestro Producto",nav_exportacion:"Exportación",nav_mercado:"Mercado Internacional",nav_video:"Nuestro Cultivo",nav_rastreo:"Rastreo",nav_envio:"Envío Internacional",nav_contacto:"Contacto",
+    hero_badge:"🌎 Exportación · Colombia → Europa",hero_cta1:"Ver Producto",hero_cta2:"Contactar",
+    nos_cap:"Tolima, Colombia · Finca propia",nos_label:"Quiénes Somos",nos_title:"Del Tolima\nal mundo",nos_desc:"Somos una empresa colombiana especializada en la producción, selección, empaque y exportación de Aguacate Hass premium. Desde las fértiles tierras del Tolima conectamos agricultores con los mercados europeos.",
+    mis_t:"Misión",mis_d:"Exportar aguacate Hass colombiano de calidad premium, conectando agricultores con los mejores mercados de Europa.",vis_t:"Visión",vis_d:"Ser el proveedor líder de aguacate Hass colombiano en el mercado europeo para 2030.",
+    v1:"🌱 Sostenibilidad",v2:"✅ Calidad",v3:"🤝 Confianza",v4:"📦 Trazabilidad",v5:"🌍 Responsabilidad",
+    prod_lbl:"Nuestro Producto",prod_title:"Aguacate Hass\nPremium",prod_ct:"Aguacate Hass Colombiano",prod_cd:"Cultivado en las altitudes ideales del Tolima, nuestro aguacate Hass presenta pulpa cremosa y sabor excepcional.",
+    sp1:"Variedad",sp2:"Origen",sp3:"Certificación",sp4:"T° Envío",
+    b1:"Rico en grasas saludables (Omega 9)",b2:"Alto contenido de vitaminas B, C, E y K",b3:"Libre de pesticidas · Producción responsable",b4:"Calibres S, M, L disponibles",
+    sizes_t:"Elige tu Caja",sz_s:"Pequeño",sz_m:"Mediano",sz_l:"Grande",cajas:"cajas",btn_cart:"🛒 Añadir al Carrito",cart_ok:"✅ ¡Añadido!",
+    exp_lbl:"Proceso de Exportación",exp_title:"Del campo\na su mesa",price_lbl:"Precios de Exportación",price_sub:"Volúmenes y tiempos de entrega",
+    e1t:"Producción",e1d:"Cultivo responsable con control de calidad desde la finca",e2t:"Selección",e2d:"Clasificación por calibre, madurez y estándares internacionales",e3t:"Empaque",e3d:"Empaque especializado para conservar la frescura",e4t:"Cadena Frío",e4d:"Transporte refrigerado a 12°C",e5t:"Logística",e5d:"Envío directo a Berlín con seguimiento en tiempo real",
+    ton:"Tonelada",tons:"Toneladas",dias:"días",
+    mkt_lbl:"Mercado Internacional",mkt_title:"Berlín,\nnuestro destino",mkt_d:"Nos enfocamos en el mercado alemán, donde la demanda de aguacate premium crece año a año.",
+    c1:"Importadores de Frutas",c2:"Supermercados",c3:"Restaurantes Saludables",c4:"Tiendas Orgánicas",sup_t:"Cadenas objetivo en Alemania",
+    bs1:"Habitantes",bs2:"Crecimiento mercado",bs3:"Destino exportación",bs4:"Mercado orgánico",
+    vid_lbl:"Conócenos",vid_title:"Así nace nuestro\naguacate",vid_d:"Del corazón del Tolima, te mostramos el proceso de cultivo y cosecha del Aguacate Hass.",vid_cap:"Cultivo · Aguacate Hass · Tolima, Colombia",
+    trk_lbl:"Rastreo",trk_title:"Control paso a paso",trk_d:"Seguimiento en tiempo real desde la finca hasta la puerta del cliente.",trk_sim:"Simular Rastreo de Pedido",btn_track:"Rastrear",
+    delivery_title:"Tiempos de Entrega por País",delivery_sub:"Desde Tolima, Colombia (punto de origen):",del_country:"País de Destino",del_time:"Tiempo Estimado",del_route:"Ruta",
+    r1:"Pedido Recibido",r1d:"Confirmación inmediata",r2:"Selección",r2d:"Premium Hass escogido",r3:"Empaque",r3d:"Caja certificada",r4:"Despacho",r4d:"Envío internacional",r5:"Entregado",r5d:"Rastreo activo",trk_transit:"En camino a Berlín, Alemania",trk_eta:"ETA: 28 Mar 2025",
+    ship_lbl:"Envío Internacional",ship_title:"Costos por País",ship_origin:"📍 Punto de origen: Tolima, Colombia — La mejor tierra para el Aguacate Hass.",consult:"Consultar",ship_note:"<strong>Nota:</strong> Precios referenciales por tonelada métrica. Para cotizaciones exactas contáctenos.",
+    con_lbl:"Contacto",con_title:"Hablemos de\nnegocios",ch_email:"Correo Electrónico",ch_phone:"Teléfono",loc_city:"Tolima, Colombia",loc_d:" · Mejor tierra para Aguacate Hass · Exportación Internacional",
+    f1:"Nombre / Empresa",f2:"Correo Electrónico",f3:"País",f3opt:"Selecciona tu país",f4:"Volumen Requerido",f5:"Mensaje",f_send:"Enviar Solicitud →",
+    cart_t:"Carrito",cart_empty:"Tu carrito está vacío",cart_total:"Total",cart_co:"Solicitar Pedido →",cart_detail:"Detalle de compra",
+    back_home:"Volver al Inicio",
+    om_title:"¡Pedido Enviado!",om_desc:"Tu solicitud fue recibida. Nuestro equipo en Tolima te contactará en menos de 24 horas.",om_close:"Cerrar",
+    cm_title:"¡Mensaje Enviado!",cm_desc:"Gracias por contactarnos. Nos comunicaremos contigo pronto desde Tolima, Colombia.",
+    contact_err:"Por favor completa todos los campos."
+  },
+  en:{
+    nav_sub:"Premium Hass Avocado · Tolima",nav_inicio:"Home",nav_nosotros:"About Us",nav_producto:"Our Product",nav_exportacion:"Export",nav_mercado:"International Market",nav_video:"Our Farm",nav_rastreo:"Tracking",nav_envio:"International Shipping",nav_contacto:"Contact",
+    hero_badge:"🌎 Export · Colombia → Europe",hero_cta1:"View Product",hero_cta2:"Contact Us",
+    nos_cap:"Tolima, Colombia · Own Farm",nos_label:"About Us",nos_title:"From Tolima\nto the world",nos_desc:"We are a Colombian company specializing in production, selection, packaging and export of premium Hass Avocado. From Tolima's fertile lands we connect farmers with European markets.",
+    mis_t:"Mission",mis_d:"Export premium Colombian Hass avocado, connecting farmers with Europe's best markets.",vis_t:"Vision",vis_d:"To be the leading Colombian Hass avocado supplier in the European market by 2030.",
+    v1:"🌱 Sustainability",v2:"✅ Quality",v3:"🤝 Trust",v4:"📦 Traceability",v5:"🌍 Responsibility",
+    prod_lbl:"Our Product",prod_title:"Hass Avocado\nPremium",prod_ct:"Colombian Hass Avocado",prod_cd:"Grown at ideal altitudes in Tolima, our Hass avocado features creamy flesh and exceptional flavor.",
+    sp1:"Variety",sp2:"Origin",sp3:"Certification",sp4:"Ship. T°",
+    b1:"Rich in healthy fats (Omega 9)",b2:"High in vitamins B, C, E and K",b3:"Pesticide-free · Responsible production",b4:"Sizes S, M, L available",
+    sizes_t:"Choose your Box",sz_s:"Small",sz_m:"Medium",sz_l:"Large",cajas:"boxes",btn_cart:"🛒 Add to Cart",cart_ok:"✅ Added!",
+    exp_lbl:"Export Process",exp_title:"From the field\nto your table",price_lbl:"Export Prices",price_sub:"Volumes and delivery times",
+    e1t:"Production",e1d:"Responsible cultivation with quality control from the farm",e2t:"Selection",e2d:"Classification by size, ripeness and international standards",e3t:"Packaging",e3d:"Specialized packaging to preserve freshness",e4t:"Cold Chain",e4d:"Refrigerated transport at 12°C",e5t:"Logistics",e5d:"Direct shipping to Berlin with real-time tracking",
+    ton:"Ton",tons:"Tons",dias:"days",
+    mkt_lbl:"International Market",mkt_title:"Berlin,\nour destination",mkt_d:"We focus on the German market, where demand for premium avocado grows year after year.",
+    c1:"Fruit Importers",c2:"Supermarkets",c3:"Healthy Restaurants",c4:"Organic Stores",sup_t:"Target chains in Germany",
+    bs1:"Inhabitants",bs2:"Market growth",bs3:"Export destination",bs4:"Organic market",
+    vid_lbl:"Meet Us",vid_title:"How our avocado\nis born",vid_d:"From the heart of Tolima, we show you the cultivation and harvest process.",vid_cap:"Cultivation · Hass Avocado · Tolima",
+    trk_lbl:"Tracking",trk_title:"Step by step control",trk_d:"Real-time tracking from farm to customer's door.",trk_sim:"Simulate Order Tracking",btn_track:"Track",
+    delivery_title:"Delivery Times by Country",delivery_sub:"From Tolima, Colombia (origin point):",del_country:"Destination Country",del_time:"Estimated Time",del_route:"Route",
+    r1:"Order Received",r1d:"Immediate confirmation",r2:"Selection",r2d:"Premium Hass chosen",r3:"Packaging",r3d:"Certified box",r4:"Dispatch",r4d:"International shipping",r5:"Delivered",r5d:"Active tracking",trk_transit:"On the way to Berlin, Germany",trk_eta:"ETA: Mar 28, 2025",
+    ship_lbl:"International Shipping",ship_title:"Costs by Country",ship_origin:"📍 Origin: Tolima, Colombia — Best land for Hass Avocado.",consult:"Consult",ship_note:"<strong>Note:</strong> Reference prices per metric ton. For exact quotes, contact us.",
+    con_lbl:"Contact",con_title:"Let's talk\nbusiness",ch_email:"Email",ch_phone:"Phone",loc_city:"Tolima, Colombia",loc_d:" · Best land for Hass Avocado · International Export",
+    f1:"Name / Company",f2:"Email",f3:"Country",f3opt:"Select your country",f4:"Required Volume",f5:"Message",f_send:"Send Request →",
+    cart_t:"Cart",cart_empty:"Your cart is empty",cart_total:"Total",cart_co:"Request Order →",cart_detail:"Purchase summary",
+    back_home:"Back to Home",
+    om_title:"Order Sent!",om_desc:"Your request has been received. Our team in Tolima will contact you within 24 hours.",om_close:"Close",
+    cm_title:"Message Sent!",cm_desc:"Thank you for contacting us. We will reach out to you shortly from Tolima, Colombia.",
+    contact_err:"Please fill in all fields."
+  },
+  de:{
+    nav_sub:"Premium Hass Avocado · Tolima",nav_inicio:"Start",nav_nosotros:"Über Uns",nav_producto:"Produkt",nav_exportacion:"Export",nav_mercado:"Internationaler Markt",nav_video:"Unser Anbau",nav_rastreo:"Verfolgung",nav_envio:"Internationaler Versand",nav_contacto:"Kontakt",
+    hero_badge:"🌎 Export · Kolumbien → Europa",hero_cta1:"Produkt ansehen",hero_cta2:"Kontaktieren",
+    nos_cap:"Tolima, Kolumbien · Eigene Farm",nos_label:"Über Uns",nos_title:"Vom Tolima\nin die Welt",nos_desc:"Wir sind ein kolumbianisches Unternehmen für Produktion, Auswahl, Verpackung und Export von Premium Hass-Avocado aus Tolima.",
+    mis_t:"Mission",mis_d:"Kolumbianische Hass-Avocado exportieren und Landwirte mit europäischen Märkten verbinden.",vis_t:"Vision",vis_d:"Bis 2030 führender Anbieter kolumbianischer Hass-Avocado in Europa.",
+    v1:"🌱 Nachhaltigkeit",v2:"✅ Qualität",v3:"🤝 Vertrauen",v4:"📦 Rückverfolgbarkeit",v5:"🌍 Verantwortung",
+    prod_lbl:"Unser Produkt",prod_title:"Hass Avocado\nPremium",prod_ct:"Kolumbianische Hass-Avocado",prod_cd:"In idealen Höhenlagen Tolimas angebaut, mit cremigem Fruchtfleisch und außergewöhnlichem Geschmack.",
+    sp1:"Sorte",sp2:"Herkunft",sp3:"Zertifizierung",sp4:"Trans. T°",
+    b1:"Reich an gesunden Fetten (Omega 9)",b2:"Reich an Vitaminen B, C, E und K",b3:"Pestizidfrei · Verantwortungsvolle Produktion",b4:"Größen S, M, L verfügbar",
+    sizes_t:"Wähle deine Kiste",sz_s:"Klein",sz_m:"Mittel",sz_l:"Groß",cajas:"Kisten",btn_cart:"🛒 In den Warenkorb",cart_ok:"✅ Hinzugefügt!",
+    exp_lbl:"Exportprozess",exp_title:"Vom Feld\nauf Ihren Tisch",price_lbl:"Exportpreise",price_sub:"Mengen und Lieferzeiten",
+    e1t:"Produktion",e1d:"Verantwortungsvoller Anbau mit Qualitätskontrolle",e2t:"Auswahl",e2d:"Klassifizierung nach Größe und Standards",e3t:"Verpackung",e3d:"Spezialverpackung zur Frischerhaltung",e4t:"Kühlkette",e4d:"Gekühlter Transport bei 12°C",e5t:"Logistik",e5d:"Direktversand nach Berlin mit Echtzeit-Verfolgung",
+    ton:"Tonne",tons:"Tonnen",dias:"Tage",
+    mkt_lbl:"Internationaler Markt",mkt_title:"Berlin,\nunser Ziel",mkt_d:"Wir konzentrieren uns auf den deutschen Markt, wo die Nachfrage nach Premium-Avocado steigt.",
+    c1:"Obstimporteure",c2:"Supermärkte",c3:"Gesunde Restaurants",c4:"Bioläden",sup_t:"Zielketten in Deutschland",
+    bs1:"Einwohner",bs2:"Marktwachstum",bs3:"Exportziel",bs4:"Biomarkt",
+    vid_lbl:"Lernen Sie uns kennen",vid_title:"So entsteht\nunsere Avocado",vid_d:"Aus Tolima zeigen wir Ihnen den Anbau- und Ernteprozess.",vid_cap:"Anbau · Hass Avocado · Tolima",
+    trk_lbl:"Verfolgung",trk_title:"Schritt für Schritt",trk_d:"Echtzeit-Verfolgung vom Bauernhof bis zur Tür des Kunden.",trk_sim:"Bestellverfolgung simulieren",btn_track:"Verfolgen",
+    delivery_title:"Lieferzeiten nach Land",delivery_sub:"Ab Tolima, Kolumbien (Ursprungsort):",del_country:"Zielland",del_time:"Geschätzte Zeit",del_route:"Route",
+    r1:"Bestellung erhalten",r1d:"Sofortige Bestätigung",r2:"Auswahl",r2d:"Premium Hass ausgewählt",r3:"Verpackung",r3d:"Zertifizierte Kiste",r4:"Versand",r4d:"Internationaler Versand",r5:"Geliefert",r5d:"Aktive Verfolgung",trk_transit:"Unterwegs nach Berlin",trk_eta:"ETA: 28. Mär. 2025",
+    ship_lbl:"Internationaler Versand",ship_title:"Kosten nach Land",ship_origin:"📍 Ursprung: Tolima, Kolumbien — Bestes Land für Hass-Avocado.",consult:"Anfragen",ship_note:"<strong>Hinweis:</strong> Referenzpreise pro Tonne. Für genaue Angebote kontaktieren Sie uns.",
+    con_lbl:"Kontakt",con_title:"Sprechen wir\nüber Geschäfte",ch_email:"E-Mail",ch_phone:"Telefon",loc_city:"Tolima, Kolumbien",loc_d:" · Bestes Land für Hass-Avocado · Internationaler Export",
+    f1:"Name / Unternehmen",f2:"E-Mail",f3:"Land",f3opt:"Land auswählen",f4:"Benötigte Menge",f5:"Nachricht",f_send:"Anfrage senden →",
+    cart_t:"Warenkorb",cart_empty:"Ihr Warenkorb ist leer",cart_total:"Gesamt",cart_co:"Bestellung anfragen →",cart_detail:"Kaufübersicht",
+    back_home:"Zurück zur Startseite",
+    om_title:"Bestellung gesendet!",om_desc:"Ihre Anfrage wurde erhalten. Unser Team in Tolima meldet sich innerhalb von 24 Stunden.",om_close:"Schließen",
+    cm_title:"Nachricht gesendet!",cm_desc:"Vielen Dank für Ihre Nachricht. Wir melden uns bald aus Tolima, Kolumbien.",
+    contact_err:"Bitte füllen Sie alle Felder aus."
+  },
+  zh:{
+    nav_sub:"优质哈斯牛油果 · 托利马",nav_inicio:"首页",nav_nosotros:"关于我们",nav_producto:"我们的产品",nav_exportacion:"出口",nav_mercado:"国际市场",nav_video:"我们的农场",nav_rastreo:"追踪",nav_envio:"国际运输",nav_contacto:"联系",
+    hero_badge:"🌎 出口 · 哥伦比亚 → 欧洲",hero_cta1:"查看产品",hero_cta2:"联系我们",
+    nos_cap:"哥伦比亚托利马 · 自有农场",nos_label:"关于我们",nos_title:"从托利马\n走向世界",nos_desc:"我们是一家哥伦比亚企业，专注于托利马优质哈斯牛油果的生产、筛选、包装和出口。",
+    mis_t:"使命",mis_d:"出口优质哥伦比亚哈斯牛油果，连接农民与欧洲最好的市场。",vis_t:"愿景",vis_d:"到2030年成为欧洲市场领先的哥伦比亚哈斯牛油果供应商。",
+    v1:"🌱 可持续性",v2:"✅ 质量",v3:"🤝 信任",v4:"📦 可追溯性",v5:"🌍 责任",
+    prod_lbl:"我们的产品",prod_title:"哈斯牛油果\n优质品",prod_ct:"哥伦比亚哈斯牛油果",prod_cd:"在托利马理想海拔种植，质地细腻，口感卓越。",
+    sp1:"品种",sp2:"产地",sp3:"认证",sp4:"运输温度",
+    b1:"富含健康脂肪（Omega 9）",b2:"含有丰富维生素 B, C, E 和 K",b3:"无农药 · 负责任的生产",b4:"提供 S、M、L 规格",
+    sizes_t:"选择您的箱子",sz_s:"小",sz_m:"中",sz_l:"大",cajas:"箱",btn_cart:"🛒 加入购物车",cart_ok:"✅ 已添加！",
+    exp_lbl:"出口流程",exp_title:"从田间\n到您的餐桌",price_lbl:"出口价格",price_sub:"数量和交货时间",
+    e1t:"生产",e1d:"在托利马进行负责任的种植",e2t:"筛选",e2d:"按规格、成熟度和国际标准严格分类",e3t:"包装",e3d:"专业包装以保持新鲜度",e4t:"冷链",e4d:"在12°C冷藏运输",e5t:"物流",e5d:"直接运往柏林，并实时追踪",
+    ton:"吨",tons:"吨",dias:"天",
+    mkt_lbl:"国际市场",mkt_title:"柏林，\n我们的目的地",mkt_d:"我们专注于德国市场，那里对优质牛油果的需求每年都在增长。",
+    c1:"水果进口商",c2:"超市",c3:"健康餐厅",c4:"有机商店",sup_t:"德国目标连锁店",
+    bs1:"居民",bs2:"市场增长",bs3:"出口目的地",bs4:"有机市场",
+    vid_lbl:"了解我们",vid_title:"我们的牛油果\n是这样诞生的",vid_d:"来自托利马，我们展示哈斯牛油果的种植和收获过程。",vid_cap:"种植 · 哈斯牛油果 · 托利马",
+    trk_lbl:"追踪",trk_title:"逐步控制",trk_d:"从农场到客户门口的实时追踪。",trk_sim:"模拟订单追踪",btn_track:"追踪",
+    delivery_title:"各国交货时间",delivery_sub:"从哥伦比亚托利马出发（起运地）：",del_country:"目的地国家",del_time:"预计时间",del_route:"路线",
+    r1:"订单已接收",r1d:"立即确认",r2:"筛选",r2d:"选择优质哈斯",r3:"包装",r3d:"认证箱",r4:"发货",r4d:"国际运输",r5:"已送达",r5d:"主动追踪",trk_transit:"前往德国柏林途中",trk_eta:"预计到达：2025年3月28日",
+    ship_lbl:"国际运输",ship_title:"各国费用",ship_origin:"📍 起运地：哥伦比亚托利马 — 哈斯牛油果最佳产地。",consult:"咨询",ship_note:"<strong>注意：</strong>参考价格每公吨。如需精确报价，请联系我们。",
+    con_lbl:"联系",con_title:"让我们谈谈\n合作",ch_email:"电子邮件",ch_phone:"电话",loc_city:"哥伦比亚托利马",loc_d:" · 哈斯牛油果最佳产地 · 国际出口",
+    f1:"姓名 / 公司",f2:"电子邮件",f3:"国家",f3opt:"选择国家",f4:"所需数量",f5:"留言",f_send:"发送询价 →",
+    cart_t:"购物车",cart_empty:"您的购物车是空的",cart_total:"合计",cart_co:"提交订单 →",cart_detail:"购买明细",
+    back_home:"返回首页",
+    om_title:"订单已提交！",om_desc:"您的请求已收到。我们在托利马的团队将在24小时内与您联系。",om_close:"关闭",
+    cm_title:"消息已发送！",cm_desc:"感谢您联系我们。我们将尽快从哥伦比亚托利马与您联系。",
+    contact_err:"请填写所有字段。"
+  }
+};
+
+function setLang(lang, btn) {
+  curLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const t = T[lang];
+  if (!t) return;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n');
+    if(t[k] !== undefined) {
+      if(k === 'ship_note') el.innerHTML = t[k];
+      else el.textContent = t[k];
+    }
+  });
+  showSlogan();
+  // Rebuild footers for current page
+  const activePage = document.querySelector('.page.active');
+  if(activePage) {
+    const pageId = activePage.id.replace('pg-','');
+    buildFooters(pageId);
+  }
+}
+
+/* ============================================================
+   PRODUCT & CART
+============================================================ */
+let selSz = {
+  es:'Caja Mediana 10kg', en:'Medium Box 10kg', de:'Mittlere Kiste 10kg', zh:'中箱 10kg',
+  price:38
+};
+let qty = 1;
+let cartData = [];
+
+function selSize(el, nameEs, nameEn, nameDe, nameZh, price) {
+  document.querySelectorAll('.size-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selSz = {es:nameEs, en:nameEn, de:nameDe, zh:nameZh, price};
+}
+
+function chQty(d) {
+  qty = Math.max(1, qty+d);
+  document.getElementById('qty-num').textContent = qty;
+}
+
+function addCart() {
+  cartData.push({
+    es: selSz.es, en: selSz.en, de: selSz.de, zh: selSz.zh,
+    price: selSz.price,
+    qty: qty
+  });
+  refreshCart();
+  const t = document.getElementById('add-toast');
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',2400);
+  // Open cart to show item was added
+  document.getElementById('cart-sidebar').classList.add('open');
+}
+
+function refreshCart() {
+  const body = document.getElementById('cart-body');
+  const badge = document.getElementById('cart-badge');
+  const total = document.getElementById('ct-price');
+  const breakdown = document.getElementById('cart-breakdown');
+  const breakdownRows = document.getElementById('breakdown-rows');
+  const t = T[curLang] || T['es'];
+
+  if (!cartData.length) {
+    body.innerHTML=`<div class="cart-empty-msg"><div class="ei">🥑</div><p>${t.cart_empty}</p></div>`;
+    badge.style.display='none';
+    total.textContent='$0.00';
+    breakdown.style.display='none';
+    return;
+  }
+
+  let sum=0, cnt=0;
+  body.innerHTML = cartData.map((it,i)=>{
+    const name = it[curLang] || it.es;
+    const sub=it.price*it.qty; sum+=sub; cnt+=it.qty;
+    return `<div class="cart-item-row">
+      <div class="ci-icon">🥑</div>
+      <div>
+        <div class="ci-name">${name}</div>
+        <div class="ci-detail">${t.cajas||'×'} ${it.qty} · $${it.price.toFixed(2)} c/u</div>
+      </div>
+      <div class="ci-price">$${sub.toFixed(2)}</div>
+      <button class="cart-item-del" onclick="removeCartItem(${i})" title="Eliminar">🗑</button>
+    </div>`;
+  }).join('');
+
+  badge.textContent=cnt; badge.style.display='flex';
+  total.textContent='$'+sum.toFixed(2);
+
+  // Breakdown with shipping
+  breakdown.style.display='block';
+  let bRows = cartData.map(it=>{
+    const name = it[curLang] || it.es;
+    return `<div class="cb-row"><span>${name} ×${it.qty}</span><span>$${(it.price*it.qty).toFixed(2)}</span></div>`;
+  }).join('');
+
+  // Add shipping cost if country selected
+  const cartCountrySel = document.getElementById('cart-ship-country');
+  const cartCountryVal = cartCountrySel ? cartCountrySel.value : '';
+  let shipCostTotal = 0;
+  if (cartCountryVal && SHIPPING_DATA && SHIPPING_DATA[cartCountryVal]) {
+    const sd = SHIPPING_DATA[cartCountryVal];
+    const totalBoxes = cartData.reduce((a,b)=>a+b.qty, 0);
+    if (sd.costNum > 0) {
+      shipCostTotal = sd.costNum * totalBoxes;
+      bRows += `<div class="cb-ship-row"><span>🚢 Envío ${sd.flag} ${sd.name}</span><span>$${shipCostTotal.toFixed(2)}</span></div>`;
+    } else {
+      bRows += `<div class="cb-ship-row"><span>🚢 Envío ${sd.flag} ${sd.name}</span><span>Consultar</span></div>`;
+    }
+    bRows += `<div style="font-size:.7rem;color:var(--txt-lt);padding:2px 0">⏱ ${sd.days} · ${sd.route}</div>`;
+  }
+
+  const grandTotal = sum + shipCostTotal;
+  bRows += `<div class="cb-row"><span>${t.cart_total||'Total'}</span><span>$${grandTotal.toFixed(2)}</span></div>`;
+  breakdownRows.innerHTML = bRows;
+  // Update grand total display
+  total.textContent='$'+grandTotal.toFixed(2);
+}
+
+function removeCartItem(idx) {
+  cartData.splice(idx, 1);
+  refreshCart();
+}
+
+function toggleCart() {
+  document.getElementById('cart-sidebar').classList.toggle('open');
+}
+
+/* ============================================================
+   CHECKOUT — solicitar pedido
+============================================================ */
+function checkoutOrder() {
+  if (!cartData.length) {
+    alert(T[curLang].cart_empty || 'Tu carrito está vacío');
+    return;
+  }
+  const ref = 'GGC-' + Date.now().toString().slice(-6);
+  document.getElementById('om-ref').textContent = 'Ref: ' + ref;
+  // Apply translations to modal
+  const t = T[curLang] || T['es'];
+  document.querySelector('#order-modal [data-i18n="om_title"]').textContent = t.om_title;
+  document.querySelector('#order-modal [data-i18n="om_desc"]').textContent = t.om_desc;
+  document.querySelector('#order-modal [data-i18n="om_close"]').textContent = t.om_close;
+  document.getElementById('order-modal').classList.add('show');
+  // Clear cart after order
+  cartData = [];
+  refreshCart();
+  document.getElementById('cart-sidebar').classList.remove('open');
+}
+
+function closeOrderModal() {
+  document.getElementById('order-modal').classList.remove('show');
+}
+
+/* ============================================================
+   CONTACT FORM SUBMIT
+============================================================ */
+function submitContact() {
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const country = document.getElementById('cf-country').value;
+  const t = T[curLang] || T['es'];
+
+  if (!name || !email || !country) {
+    alert(t.contact_err || 'Por favor completa todos los campos.');
+    return;
+  }
+
+  // Apply translations to contact modal
+  document.querySelector('#contact-modal [data-i18n="cm_title"]').textContent = t.cm_title;
+  document.querySelector('#contact-modal [data-i18n="cm_desc"]').textContent = t.cm_desc;
+  document.querySelector('#contact-modal [data-i18n="om_close"]').textContent = t.om_close;
+  document.getElementById('contact-modal').classList.add('show');
+
+  // Clear form
+  document.getElementById('cf-name').value = '';
+  document.getElementById('cf-email').value = '';
+  document.getElementById('cf-country').value = '';
+  document.getElementById('cf-message').value = '';
+}
+
+
+/* ============================================================
+   SHIPPING COST DATA BY COUNTRY
+============================================================ */
+const SHIPPING_DATA = {
+  de: { flag:'🇩🇪', name:'Alemania', cost:'USD 12.50/caja', costNum:12.50, days:'25–45 días', route:'Bogotá → Hamburgo/Bremen', transit:'En camino a Alemania 🇩🇪' },
+  nl: { flag:'🇳🇱', name:'Países Bajos', cost:'USD 13.00/caja', costNum:13.00, days:'28–48 días', route:'Bogotá → Rotterdam', transit:'En camino a Países Bajos 🇳🇱' },
+  es: { flag:'🇪🇸', name:'España', cost:'USD 11.50/caja', costNum:11.50, days:'22–40 días', route:'Bogotá → Barcelona/Valencia', transit:'En camino a España 🇪🇸' },
+  fr: { flag:'🇫🇷', name:'Francia', cost:'USD 12.80/caja', costNum:12.80, days:'26–45 días', route:'Bogotá → Le Havre', transit:'En camino a Francia 🇫🇷' },
+  uk: { flag:'🇬🇧', name:'Reino Unido', cost:'USD 14.00/caja', costNum:14.00, days:'28–50 días', route:'Bogotá → Felixstowe', transit:'En camino al Reino Unido 🇬🇧' },
+  cn: { flag:'🇨🇳', name:'China', cost:'Consultar', costNum:0, days:'35–60 días', route:'Bogotá → Shanghai/Shenzhen', transit:'En camino a China 🇨🇳' },
+  jp: { flag:'🇯🇵', name:'Japón', cost:'USD 18.50/caja', costNum:18.50, days:'38–65 días', route:'Bogotá → Tokyo/Osaka', transit:'En camino a Japón 🇯🇵' },
+  us: { flag:'🇺🇸', name:'Estados Unidos', cost:'USD 9.80/caja', costNum:9.80, days:'12–22 días', route:'Bogotá → Miami/Los Ángeles', transit:'En camino a EE.UU. 🇺🇸' },
+  mx: { flag:'🇲🇽', name:'México', cost:'USD 7.50/caja', costNum:7.50, days:'8–15 días', route:'Bogotá → Ciudad de México', transit:'En camino a México 🇲🇽' },
+  br: { flag:'🇧🇷', name:'Brasil', cost:'USD 8.20/caja', costNum:8.20, days:'10–20 días', route:'Bogotá → São Paulo', transit:'En camino a Brasil 🇧🇷' },
+  ca: { flag:'🇨🇦', name:'Canadá', cost:'USD 11.00/caja', costNum:11.00, days:'14–25 días', route:'Bogotá → Toronto/Vancouver', transit:'En camino a Canadá 🇨🇦' },
+  au: { flag:'🇦🇺', name:'Australia', cost:'USD 22.00/caja', costNum:22.00, days:'45–75 días', route:'Bogotá → Sydney/Melbourne', transit:'En camino a Australia 🇦🇺' }
+};
+
+// Timeline templates per country (different ETAs)
+const TRACKING_TEMPLATES = {
+  de: { days:35, city:'Hamburgo, Alemania', transit:'Puerto de Hamburgo — en aduana' },
+  nl: { days:38, city:'Rotterdam, Países Bajos', transit:'Puerto de Rotterdam — en aduana' },
+  es: { days:32, city:'Barcelona, España', transit:'Puerto de Barcelona — en aduana' },
+  fr: { days:36, city:'Le Havre, Francia', transit:'Puerto de Le Havre — en aduana' },
+  uk: { days:39, city:'Felixstowe, Reino Unido', transit:'Puerto de Felixstowe — en aduana' },
+  cn: { days:48, city:'Shanghai, China', transit:'Puerto de Shanghai — en proceso de importación' },
+  jp: { days:52, city:'Tokyo, Japón', transit:'Puerto de Tokyo — en aduana' },
+  us: { days:17, city:'Miami, EE.UU.', transit:'Miami, Florida — despacho aduanal' },
+  mx: { days:12, city:'Ciudad de México, México', transit:'AICM / Puerto Lázaro Cárdenas' },
+  br: { days:15, city:'São Paulo, Brasil', transit:'Puerto de Santos — en aduana' },
+  ca: { days:20, city:'Toronto, Canadá', transit:'Toronto — aduana canadiense' },
+  au: { days:60, city:'Sydney, Australia', transit:'Puerto de Sydney — cuarentena y aduana' }
+};
+
+let selectedShipCountry = '';
+
+function updateShippingCost() {
+  const sel = document.getElementById('ship-country-sel');
+  const val = sel ? sel.value : '';
+  selectedShipCountry = val;
+  const display = document.getElementById('ship-cost-display');
+  if (!display) return;
+  if (!val || !SHIPPING_DATA[val]) {
+    display.classList.remove('show');
+    return;
+  }
+  const d = SHIPPING_DATA[val];
+  document.getElementById('scd-country').textContent = d.flag + ' ' + d.name;
+  document.getElementById('scd-cost').textContent = '🚢 Envío: ' + d.cost;
+  document.getElementById('scd-days').textContent = '⏱ Tiempo estimado: ' + d.days;
+  document.getElementById('scd-route').textContent = '📍 Ruta: ' + d.route;
+  display.classList.add('show');
+  // Sync with cart country selector
+  const cartSel = document.getElementById('cart-ship-country');
+  if (cartSel) { cartSel.value = val; refreshCart(); }
+}
+
+function updateTrackingCountry() {
+  const sel = document.getElementById('trk-country-sel');
+  const val = sel ? sel.value : '';
+  const info = document.getElementById('trk-country-info');
+  if (!info) return;
+  if (!val || !SHIPPING_DATA[val]) {
+    info.style.display = 'none';
+    return;
+  }
+  const d = SHIPPING_DATA[val];
+  const trk = TRACKING_TEMPLATES[val];
+  document.getElementById('trk-country-name').textContent = d.flag + ' ' + d.name + ' — ' + d.days;
+  document.getElementById('trk-country-time').textContent = '📍 Ruta: ' + d.route;
+  document.getElementById('trk-country-route').textContent = '⏱ Tiempo estimado de entrega: ' + d.days + ' desde despacho';
+  info.style.display = 'block';
+}
+
+function simTrack() {
+  const val = document.getElementById('order-input').value.trim();
+  if (!val) {
+    document.getElementById('order-input').style.borderColor='#cc4444';
+    setTimeout(()=>document.getElementById('order-input').style.borderColor='',2000);
+    return;
+  }
+  const countryVal = document.getElementById('trk-country-sel') ? document.getElementById('trk-country-sel').value : '';
+  const d = SHIPPING_DATA[countryVal] || SHIPPING_DATA['de'];
+  const trk = TRACKING_TEMPLATES[countryVal] || TRACKING_TEMPLATES['de'];
+
+  // Build dates relative to reference order
+  const base = new Date(2025, 2, 15); // March 15 as order date
+  const fmt = (d) => d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
+  const d1 = new Date(base); d1.setDate(base.getDate()+0);
+  const d2 = new Date(base); d2.setDate(base.getDate()+2);
+  const d3 = new Date(base); d3.setDate(base.getDate()+3);
+  const etaDate = new Date(base); etaDate.setDate(base.getDate() + trk.days);
+
+  const timeline = document.getElementById('dynamic-timeline');
+  if (timeline) {
+    timeline.innerHTML = `
+      <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-text"><h5>Pedido Recibido</h5><p>${fmt(d1)} · 09:14 AM · Tolima, Colombia</p></div></div>
+      <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-text"><h5>Selección Premium</h5><p>${fmt(d2)} · 07:30 AM · Planta Tolima</p></div></div>
+      <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-text"><h5>Empaque y Despacho</h5><p>${fmt(d3)} · 11:00 AM · Centro Logístico</p></div></div>
+      <div class="tl-item"><div class="tl-dot current">📍</div><div class="tl-text"><h5>En Tránsito Internacional</h5><p>${d.flag} ${trk.transit} · Ref: ${val}</p></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:rgba(0,0,0,.1)">○</div><div class="tl-text"><h5 style="color:var(--txt-lt)">Entrega en ${d.name}</h5><p>ETA: ${fmt(etaDate)} · ${trk.city}</p></div></div>
+    `;
+  }
+
+  document.getElementById('tracker-result').style.display='block';
+  document.getElementById('tracker-result').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+function triggerReveal() {
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  setLang('es', document.querySelector('.lang-btn.active'));
+  buildFooters('inicio');
+  triggerReveal();
+  setInterval(()=>{
+    sloganIdx=(sloganIdx+1)%3;
+    showSlogan();
+  },4000);
+});
+
+function playVideo() {
+  document.getElementById("videoContainer").innerHTML = `
+    <video controls autoplay style="width:100%; border-radius:15px;">
+      <source src="Aguacate.mp4" type="video/mp4">
+    </video>
+  `;
+}
+</script>
+</body>
+</html>
