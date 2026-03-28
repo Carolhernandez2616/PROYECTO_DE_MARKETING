@@ -604,12 +604,39 @@ img{display:block;max-width:100%}
 <body>
 
 <!-- LANG BAR (top right) -->
+<!-- LANG BAR (top right) -->
 <div id="lang-bar">
-  <button class="lang-btn active" onclick="setLang('es',this)">ES</button>
-  <button class="lang-btn" onclick="setLang('en',this)">EN</button>
-  <button class="lang-btn" onclick="setLang('de',this)">DE</button>
-  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn active" onclick="setLang('es', this)">
+    <img src="https://flagcdn.com/w80/es.png" alt="ES">
+    <span></span>
+  </button>
+  
+  <button class="lang-btn" onclick="setLang('en', this)">
+    <img src="https://flagcdn.com/w80/us.png" alt="EN">
+    <span></span>
+  </button>
+  
+  <button class="lang-btn" onclick="setLang('de', this)">
+    <img src="https://flagcdn.com/w80/de.png" alt="DE">
+    <span></span>
+  </button>
+
+  <button class="lang-btn" onclick="setLang('zh', this)">
+    <img src="https://flagcdn.com/w80/cn.png" alt="ZH">
+    <span></span>
+  </button>
 </div>
+<script>
+function setLang(lang, element) {
+    // Quita la clase activa de todos los botones
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    // La añade al botón oprimido (se vuelve Oro)
+    element.classList.add('active');
+    
+    console.log("Idioma cambiado a: " + lang);
+    // Aquí puedes integrar tu lógica de traducción más adelante
+}
+</script>
 
 <!-- HAMBURGER (top-left) -->
 <button id="nav-toggle" onclick="toggleNav()" aria-label="Menú">
