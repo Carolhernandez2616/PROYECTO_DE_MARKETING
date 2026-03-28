@@ -43,17 +43,23 @@ img{display:block;max-width:100%}
 ============================================================ */
 #lang-bar{
   position:fixed;top:0;right:0;z-index:1200;
-  display:flex;gap:4px;padding:8px 16px;
+  display:flex;gap:4px;padding:4px 8px;
   background:rgba(26,58,31,.94);backdrop-filter:blur(10px);
-  border-bottom-left-radius:14px;
+  border-bottom-left-radius:4px;
+  
 }
 .lang-btn{
   background:none;border:1px solid rgba(200,168,75,.4);
-  color:var(--gold-lt);padding:4px 11px;border-radius:6px;
-  cursor:pointer;font-size:.72rem;font-family:'DM Sans',sans-serif;
-  font-weight:500;letter-spacing:.08em;transition:all .2s;
+  color:var(--gold-lt);padding:4px 9px;border-radius:3px;
+  cursor:pointer;font-size:.10rem;font-family:'DM Sans',sans-serif;
+  font-weight:100;letter-spacing:.08em;transition:all .2s;
+  margin:4px;
+
 }
-.lang-btn.active,.lang-btn:hover{background:var(--gold);color:var(--g-deep);border-color:var(--gold)}
+.lang-btn.active,.lang-btn:hover{background:var(--gold);color:var(--g-deep);border-color:var(--gold);
+width:20%;
+height: auto;
+}
 
 /* ============================================================
    TOP NAV BAR (centered menu links)
@@ -590,8 +596,7 @@ img{display:block;max-width:100%}
 .trk-country-label{
   font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--g-mid);font-weight:600;margin-bottom:8px;
-}
-.trk-country-select{
+}.trk-country-select{
   width:100%;background:var(--cream);border:1.5px solid rgba(26,58,31,.18);
   border-radius:10px;padding:10px 14px;font-size:.86rem;font-family:'DM Sans',sans-serif;
   color:var(--txt-dark);cursor:pointer;transition:border-color .2s;appearance:none;
@@ -605,10 +610,22 @@ img{display:block;max-width:100%}
 
 <!-- LANG BAR (top right) -->
 <div id="lang-bar">
-  <button class="lang-btn active" onclick="setLang('es',this)">ES</button>
-  <button class="lang-btn" onclick="setLang('en',this)">EN</button>
-  <button class="lang-btn" onclick="setLang('de',this)">DE</button>
-  <button class="lang-btn" onclick="setLang('zh',this)">中文</button>
+  <button class="lang-btn active" onclick="setLang('es', this)">
+    <img src="https://flagcdn.com/w80/es.png" alt="ES">
+    <span></span>
+  </button>
+  <button class="lang-btn" onclick="setLang('en', this)">
+    <img src="https://flagcdn.com/w80/us.png" alt="EN">
+    <span></span>
+  </button>
+  <button class="lang-btn active" onclick="setLang('de', this)">
+    <img src="https://flagcdn.com/w80/de.png" alt="DE">
+    <span></span>
+  </button>
+  <button class="lang-btn" onclick="setLang('zh', this)">
+    <img src="https://flagcdn.com/w80/cn.png" alt="ZH">
+    <span></span>
+  </button>
 </div>
 
 <!-- HAMBURGER (top-left) -->
