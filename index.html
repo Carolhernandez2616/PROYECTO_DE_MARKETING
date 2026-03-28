@@ -3,6 +3,8 @@
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥑</text></svg>">
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Green Gold Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -612,6 +614,393 @@ img{display:block;max-width:100%}
   background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;
 }
 .trk-country-select:focus{outline:none;border-color:var(--g-mid)}
+
+/* === MAP DESTINATION === */
+#trk-map-container {
+  display: none;
+  margin-top: 18px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26,58,31,.18);
+  border: 2px solid rgba(200,168,75,.3);
+  animation: pgIn .4s ease both;
+}
+#trk-map-container.show { display: block; }
+#trk-destination-map {
+  height: 260px;
+  width: 100%;
+  border-radius: 14px;
+}
+.map-caption {
+  background: var(--g-deep);
+  color: rgba(255,255,255,.75);
+  font-size: .76rem;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.map-caption strong { color: var(--gold-lt); }
+.dot-dest {
+  background: #c8a84b;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid #1a3a1f;
+  box-shadow: 0 0 18px #c8a84b;
+  animation: mapPulse 1.5s infinite;
+}
+.dot-origin {
+  background: #4caf60;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 12px #4caf60;
+}
+@keyframes mapPulse {
+  0%,100% { transform: scale(1); opacity:1; }
+  50% { transform: scale(1.4); opacity:.8; }
+}
+
+
+/* === INLINE MINI-CART BELOW BTN-ADD === */
+.inline-cart-wrap {
+  margin-top: 16px;
+  display: none;
+  animation: pgIn .35s ease both;
+}
+.inline-cart-wrap.show { display: block; }
+
+.inline-cart-panel {
+  background: white;
+  border: 2px solid rgba(200,168,75,.25);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(26,58,31,.13);
+  overflow: hidden;
+}
+
+.ic-header {
+  background: var(--g-deep);
+  color: white;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.ic-header h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold-lt);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.ic-header .ic-count {
+  background: var(--gold);
+  color: var(--g-deep);
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  font-size: .72rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ic-toggle-icon {
+  font-size: .8rem;
+  color: rgba(255,255,255,.6);
+  transition: transform .3s;
+}
+.ic-header.collapsed .ic-toggle-icon { transform: rotate(-90deg); }
+
+.ic-body {
+  padding: 16px 18px;
+  max-height: 400px;
+  overflow-y: auto;
+  transition: max-height .35s ease;
+}
+.ic-body.hidden { max-height: 0; padding-top:0; padding-bottom:0; overflow: hidden; }
+
+.ic-empty {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--txt-lt);
+  font-size: .84rem;
+}
+.ic-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  font-size: .84rem;
+}
+.ic-item:last-of-type { border-bottom: none; }
+.ic-item-icon { font-size: 1.4rem; }
+.ic-item-name { font-weight: 600; color: var(--g-deep); font-size: .86rem; }
+.ic-item-detail { font-size: .74rem; color: var(--txt-lt); margin-top: 2px; }
+.ic-item-price { margin-left: auto; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; white-space: nowrap; }
+.ic-item-del { background: none; border: none; color: #cc4444; font-size: .9rem; cursor: pointer; padding: 4px 6px; border-radius: 6px; transition: background .2s; }
+.ic-item-del:hover { background: rgba(204,68,68,.08); }
+
+.ic-ship-select {
+  width: 100%;
+  background: var(--cream);
+  border: 1.5px solid rgba(26,58,31,.18);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: .82rem;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--txt-dark);
+  cursor: pointer;
+  margin: 10px 0 6px;
+  appearance: none;
+}
+.ic-ship-select:focus { outline: none; border-color: var(--g-mid); }
+
+.ic-breakdown {
+  background: rgba(26,58,31,.04);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  font-size: .8rem;
+  color: var(--txt-mid);
+}
+.ic-breakdown .icb-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.ic-breakdown .icb-row:last-child { border-bottom: none; font-weight: 700; color: var(--g-deep); padding-top: 6px; }
+
+.ic-ship-info {
+  font-size: .74rem;
+  color: var(--txt-lt);
+  margin-bottom: 6px;
+}
+
+.btn-ic-checkout {
+  width: 100%;
+  background: var(--gold);
+  color: var(--g-deep);
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .3s;
+  letter-spacing: .04em;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+.btn-ic-checkout:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+/* Cart icon button shown below btn-add */
+.btn-open-cart {
+  width: 100%;
+  background: transparent;
+  border: 2px solid var(--g-deep);
+  color: var(--g-deep);
+  padding: 11px;
+  border-radius: 10px;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.btn-open-cart:hover { background: var(--g-deep); color: white; }
+.btn-open-cart .boc-badge {
+  background: var(--gold);
+  color: var(--g-deep);
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  font-size: .68rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Hide global cart button - replaced by inline product page button */
+#cart-btn { display: none !important; }
+
+
+/* === CART ICON BUTTON (solo ícono, debajo de btn-add) === */
+#prod-cart-btn {
+  width: 54px !important;
+  height: 54px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: var(--g-deep) !important;
+  border: 2px solid rgba(200,168,75,.4) !important;
+  color: white !important;
+  font-size: 1.4rem !important;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  margin: 12px auto 0 !important;
+  box-shadow: 0 4px 18px rgba(26,58,31,.25);
+  transition: all .3s;
+  gap: 0 !important;
+}
+#prod-cart-btn:hover {
+  background: var(--g-mid) !important;
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(26,58,31,.35);
+}
+#prod-cart-btn .boc-badge {
+  position: absolute;
+  top: -5px; right: -5px;
+  background: var(--gold);
+  color: var(--g-deep);
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  font-size: .68rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+/* === PANEL DESPLEGABLE INLINE === */
+#prod-cart-panel {
+  display: none;
+  margin-top: 14px;
+  background: white;
+  border: 2px solid rgba(200,168,75,.25);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(26,58,31,.15);
+  overflow: hidden;
+  animation: pgIn .3s ease both;
+}
+#prod-cart-panel.show { display: block; }
+
+.pcp-header {
+  background: var(--g-deep);
+  color: white;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pcp-header h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--gold-lt);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pcp-close {
+  background: none; border: none; color: rgba(255,255,255,.7);
+  font-size: 1.1rem; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+  transition: color .2s;
+}
+.pcp-close:hover { color: white; }
+
+.pcp-body { padding: 16px 18px; }
+
+.pcp-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.pcp-item:last-of-type { border-bottom: none; }
+.pcp-item-icon { font-size: 1.5rem; }
+.pcp-item-name { font-weight: 600; color: var(--g-deep); font-size: .86rem; }
+.pcp-item-detail { font-size: .75rem; color: var(--txt-lt); margin-top: 2px; }
+.pcp-item-price { margin-left: auto; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); font-weight: 700; white-space: nowrap; }
+.pcp-item-del { background: none; border: none; color: #cc4444; font-size: .9rem; cursor: pointer; padding: 4px 6px; border-radius: 6px; transition: background .2s; margin-left: 4px; }
+.pcp-item-del:hover { background: rgba(204,68,68,.08); }
+
+.pcp-empty { text-align: center; padding: 24px 0; color: var(--txt-lt); font-size: .84rem; }
+
+.pcp-ship-select {
+  width: 100%;
+  background: var(--cream);
+  border: 1.5px solid rgba(26,58,31,.18);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: .82rem;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--txt-dark);
+  cursor: pointer;
+  margin: 12px 0 6px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d6a35' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+.pcp-ship-select:focus { outline: none; border-color: var(--g-mid); }
+
+.pcp-breakdown {
+  background: rgba(26,58,31,.04);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  font-size: .8rem;
+  color: var(--txt-mid);
+}
+.pcp-breakdown .pb-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.pcp-breakdown .pb-row:last-child {
+  border-bottom: none;
+  font-weight: 700;
+  color: var(--g-deep);
+  padding-top: 7px;
+  font-size: .86rem;
+}
+
+.pcp-total-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 4px;
+  border-top: 1px solid rgba(0,0,0,.08);
+  margin-top: 4px;
+}
+.pcp-total-bar span:first-child { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--txt-lt); }
+.pcp-total-bar .pcp-total-price { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; color: var(--g-deep); font-weight: 700; }
+
+.btn-pcp-checkout {
+  width: 100%;
+  background: var(--gold);
+  color: var(--g-deep);
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .3s;
+  letter-spacing: .04em;
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+.btn-pcp-checkout:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
 </style>
 </head>
 <body>
@@ -831,6 +1220,51 @@ function setLang(lang, element) {
           </div>
           <button class="btn-add" onclick="addCart()" data-i18n="btn_cart">🛒 Añadir al Carrito</button>
           <div class="add-toast" id="add-toast" data-i18n="cart_ok">✅ ¡Añadido al carrito!</div>
+
+          <!-- BOTÓN CARRITO ICONO (solo página Producto) -->
+          <button id="prod-cart-btn" onclick="toggleProdCartPanel()" aria-label="Ver carrito">
+            🛒
+            <span class="boc-badge" id="prod-cart-badge">0</span>
+          </button>
+
+          <!-- PANEL DESPLEGABLE CARRITO INLINE -->
+          <div id="prod-cart-panel">
+            <div class="pcp-header">
+              <h4>🛒 Carrito de Compra</h4>
+              <button class="pcp-close" onclick="toggleProdCartPanel()">✕</button>
+            </div>
+            <div class="pcp-body">
+              <div id="pcp-items-wrap">
+                <div class="pcp-empty" id="pcp-empty">Tu carrito está vacío</div>
+                <div id="pcp-items"></div>
+              </div>
+
+              <select class="pcp-ship-select" id="pcp-ship-country" onchange="renderProdCart()">
+                <option value="">🌍 Selecciona país de envío</option>
+                <option value="de">🇩🇪 Alemania</option>
+                <option value="nl">🇳🇱 Países Bajos</option>
+                <option value="es">🇪🇸 España</option>
+                <option value="fr">🇫🇷 Francia</option>
+                <option value="uk">🇬🇧 Reino Unido</option>
+                <option value="cn">🇨🇳 China</option>
+                <option value="jp">🇯🇵 Japón</option>
+                <option value="us">🇺🇸 Estados Unidos</option>
+                <option value="mx">🇲🇽 México</option>
+                <option value="br">🇧🇷 Brasil</option>
+                <option value="ca">🇨🇦 Canadá</option>
+                <option value="au">🇦🇺 Australia</option>
+              </select>
+
+              <div class="pcp-breakdown" id="pcp-breakdown" style="display:none"></div>
+
+              <div class="pcp-total-bar">
+                <span>TOTAL</span>
+                <span class="pcp-total-price" id="pcp-total">$0.00</span>
+              </div>
+
+              <button class="btn-pcp-checkout" onclick="pcpCheckout()">🚀 Solicitar Pedido</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1008,6 +1442,13 @@ function setLang(lang, element) {
           <div id="trk-country-time" style="color:rgba(255,255,255,.8)"></div>
           <div id="trk-country-route" style="color:rgba(255,255,255,.5);font-size:.74rem;margin-top:2px"></div>
         </div>
+        <div id="trk-map-container">
+          <div id="trk-destination-map"></div>
+          <div class="map-caption">
+            <span>📍</span>
+            <span>Origen: <strong>Tolima, Colombia</strong> &rarr; Destino: <strong id="map-dest-label">—</strong></span>
+          </div>
+        </div>
       </div>
 
       <div class="rastreo-tracker reveal" style="margin-top:40px">
@@ -1173,6 +1614,30 @@ function setLang(lang, element) {
     <h3 data-i18n="om_title">¡Pedido Enviado!</h3>
     <p data-i18n="om_desc">Tu solicitud ha sido recibida. Nuestro equipo en Tolima, Colombia te contactará en menos de 24 horas.</p>
     <div class="om-ref" id="om-ref">Ref: GGC-2025-001</div>
+
+    <!-- DETALLE DE COMPRA + ENVÍO -->
+    <div id="om-detail" style="
+      background:#f5f0e8;
+      border-radius:12px;
+      padding:14px 16px;
+      margin:16px 0;
+      text-align:left;
+      font-size:.82rem;
+      color:#3a3a3a;
+      display:none;
+    ">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:#1a3a1f;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+        📋 Detalle de tu pedido
+      </div>
+      <div id="om-items"></div>
+      <div id="om-ship-row" style="display:none;padding:6px 0;border-top:1px solid rgba(0,0,0,.08);margin-top:4px;color:#2d6a35;font-weight:600;"></div>
+      <div id="om-ship-note" style="font-size:.72rem;color:#7a7a7a;padding-bottom:4px;"></div>
+      <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:2px solid rgba(26,58,31,.12);font-weight:700;color:#1a3a1f;font-size:.88rem;">
+        <span>TOTAL</span>
+        <span id="om-total" style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;">$0.00</span>
+      </div>
+    </div>
+
     <button class="om-btn" onclick="closeOrderModal()" data-i18n="om_close">Cerrar</button>
   </div>
 </div>
@@ -1689,29 +2154,73 @@ function simTrack() {
     setTimeout(()=>document.getElementById('order-input').style.borderColor='',2000);
     return;
   }
-  const countryVal = document.getElementById('trk-country-sel') ? document.getElementById('trk-country-sel').value : '';
-  const d = SHIPPING_DATA[countryVal] || SHIPPING_DATA['de'];
-  const trk = TRACKING_TEMPLATES[countryVal] || TRACKING_TEMPLATES['de'];
 
-  // Build dates relative to reference order
-  const base = new Date(2025, 2, 15); // March 15 as order date
-  const fmt = (d) => d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
-  const d1 = new Date(base); d1.setDate(base.getDate()+0);
-  const d2 = new Date(base); d2.setDate(base.getDate()+2);
-  const d3 = new Date(base); d3.setDate(base.getDate()+3);
-  const etaDate = new Date(base); etaDate.setDate(base.getDate() + trk.days);
+  const countryVal = document.getElementById('trk-country-sel') ? document.getElementById('trk-country-sel').value : '';
+  if (!countryVal) {
+    alert('Por favor selecciona el país de destino de tu pedido.');
+    return;
+  }
+
+  const d    = SHIPPING_DATA[countryVal] || SHIPPING_DATA['de'];
+  const trk  = TRACKING_TEMPLATES[countryVal] || TRACKING_TEMPLATES['de'];
+
+  // Use reference string as a numeric seed to vary dates per reference
+  const seed = val.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const offsetDays = seed % 15; // 0–14 days variation in order date
+
+  // Base order date varies by reference
+  const base = new Date(2026, 0, 5 + offsetDays); // Jan 5–19 2026
+  const fmt = d => d.toLocaleDateString('es-CO', {day:'2-digit', month:'short', year:'numeric'});
+
+  // Generate times using seed for variety
+  const times = ['08:22 AM','09:14 AM','10:05 AM','07:30 AM','11:45 AM','14:10 PM','08:50 AM','13:20 PM'];
+  const t0 = times[seed % times.length];
+  const t1 = times[(seed + 2) % times.length];
+  const t2 = times[(seed + 4) % times.length];
+
+  const d1 = new Date(base); d1.setDate(base.getDate());
+  const d2 = new Date(base); d2.setDate(base.getDate() + 2);
+  const d3 = new Date(base); d3.setDate(base.getDate() + 3 + (seed % 3));
+  const etaDate = new Date(base); etaDate.setDate(base.getDate() + trk.days + (seed % 8));
+
+  // Transit detail varies by country + seed
+  const transitDetails = [
+    'en proceso de verificación aduanal',
+    'en revisión fitosanitaria',
+    'liberado de aduana — en ruta final',
+    'en aduana — pendiente documentación',
+    'en zona de carga — despacho inminente'
+  ];
+  const transitDetail = trk.transit + ' · ' + transitDetails[seed % transitDetails.length];
+
+  // City of delivery varies slightly by seed
+  const deliveryCities = {
+    de: ['Hamburgo','Bremen','Frankfurt','Berlín'],
+    nl: ['Rotterdam','Ámsterdam','Utrecht'],
+    es: ['Barcelona','Valencia','Madrid','Bilbao'],
+    fr: ['Le Havre','París','Lyon','Marsella'],
+    uk: ['Felixstowe','Londres','Manchester'],
+    cn: ['Shanghái','Shenzhen','Guangzhou'],
+    jp: ['Tokio','Osaka','Nagoya'],
+    us: ['Miami','Los Ángeles','Nueva York','Chicago'],
+    mx: ['Ciudad de México','Guadalajara','Monterrey'],
+    br: ['São Paulo','Río de Janeiro','Santos'],
+    ca: ['Toronto','Vancouver','Montreal'],
+    au: ['Sídney','Melbourne','Brisbane']
+  };
+  const cities = deliveryCities[countryVal] || [trk.city];
+  const deliveryCity = cities[seed % cities.length];
 
   const timeline = document.getElementById('dynamic-timeline');
   if (timeline) {
     timeline.innerHTML = `
-      <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-text"><h5>Pedido Recibido</h5><p>${fmt(d1)} · 09:14 AM · Tolima, Colombia</p></div></div>
-      <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-text"><h5>Selección Premium</h5><p>${fmt(d2)} · 07:30 AM · Planta Tolima</p></div></div>
-      <div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-text"><h5>Empaque y Despacho</h5><p>${fmt(d3)} · 11:00 AM · Centro Logístico</p></div></div>
-      <div class="tl-item"><div class="tl-dot current">📍</div><div class="tl-text"><h5>En Tránsito Internacional</h5><p>${d.flag} ${trk.transit} · Ref: ${val}</p></div></div>
-      <div class="tl-item"><div class="tl-dot" style="background:rgba(0,0,0,.1)">○</div><div class="tl-text"><h5 style="color:var(--txt-lt)">Entrega en ${d.name}</h5><p>ETA: ${fmt(etaDate)} · ${trk.city}</p></div></div>
+      <div class="tl-item"><div class="tl-dot done"></div><div class="tl-text"><h5>Pedido Recibido</h5><p>${fmt(d1)} · ${t0} · Tolima, Colombia</p></div></div>
+      <div class="tl-item"><div class="tl-dot done"></div><div class="tl-text"><h5>Selección Premium</h5><p>${fmt(d2)} · ${t1} · Planta Tolima</p></div></div>
+      <div class="tl-item"><div class="tl-dot done"></div><div class="tl-text"><h5>Empaque y Despacho</h5><p>${fmt(d3)} · ${t2} · Centro Logístico</p></div></div>
+      <div class="tl-item"><div class="tl-dot current"></div><div class="tl-text"><h5>En Tránsito Internacional</h5><p>${d.flag} ${transitDetail} · Ref: ${val}</p></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:rgba(0,0,0,.1)"></div><div class="tl-text"><h5 style="color:var(--txt-lt)">Entrega en ${deliveryCity}, ${d.name}</h5><p>ETA: ${fmt(etaDate)} · ${d.days}</p></div></div>
     `;
   }
-
   document.getElementById('tracker-result').style.display='block';
   document.getElementById('tracker-result').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -1751,7 +2260,323 @@ function playVideo() {
   `;
 }
 </script>
-<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/03/28/18/20260328181117-7P7PDP16.js" defer></script>
+
+<!-- Leaflet JS for destination map -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function() {
+  // Coordinates for each destination country (capital / main port)
+  const DEST_COORDS = {
+    de: { lat: 53.55,  lng: 9.99,   label: 'Hamburgo, Alemania',        zoom: 5 },
+    nl: { lat: 51.92,  lng: 4.47,   label: 'Rotterdam, Países Bajos',   zoom: 5 },
+    es: { lat: 41.38,  lng: 2.17,   label: 'Barcelona, España',         zoom: 5 },
+    fr: { lat: 49.49,  lng: 0.10,   label: 'Le Havre, Francia',         zoom: 5 },
+    uk: { lat: 51.96,  lng: 1.35,   label: 'Felixstowe, Reino Unido',   zoom: 5 },
+    cn: { lat: 31.23,  lng: 121.47, label: 'Shanghái, China',           zoom: 4 },
+    jp: { lat: 35.45,  lng: 139.64, label: 'Tokio, Japón',              zoom: 5 },
+    us: { lat: 25.77,  lng: -80.19, label: 'Miami, EE.UU.',             zoom: 4 },
+    mx: { lat: 19.43,  lng: -99.13, label: 'Ciudad de México, México',  zoom: 5 },
+    br: { lat: -23.55, lng: -46.63, label: 'São Paulo, Brasil',         zoom: 4 },
+    ca: { lat: 43.65,  lng: -79.38, label: 'Toronto, Canadá',           zoom: 4 },
+    au: { lat: -33.86, lng: 151.20, label: 'Sídney, Australia',         zoom: 4 }
+  };
+
+  const TOLIMA = [4.4389, -75.2322];
+  let destMap = null;
+  let destMarker = null;
+  let originMarker = null;
+  let routeLine = null;
+
+  function initDestMap() {
+    if (destMap) return;
+    destMap = L.map('trk-destination-map', { zoomControl: true, scrollWheelZoom: false })
+               .setView(TOLIMA, 2);
+    L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0','mt1','mt2','mt3'],
+      attribution: '© Google'
+    }).addTo(destMap);
+
+    // Fixed origin marker (Tolima)
+    originMarker = L.marker(TOLIMA, {
+      icon: L.divIcon({ className: '', html: '<div class="dot-origin"></div>', iconSize: [10,10], iconAnchor: [5,5] })
+    }).addTo(destMap).bindPopup('🌿 Tolima, Colombia — Origen');
+  }
+
+  window.showDestinationMap = function(countryCode) {
+    const container = document.getElementById('trk-map-container');
+    const labelEl = document.getElementById('map-dest-label');
+    if (!countryCode || !DEST_COORDS[countryCode]) {
+      container.classList.remove('show');
+      return;
+    }
+    const d = DEST_COORDS[countryCode];
+    container.classList.add('show');
+    labelEl.textContent = d.label;
+
+    // Init map lazily (must be visible first)
+    setTimeout(function() {
+      initDestMap();
+      destMap.invalidateSize();
+
+      // Remove old destination marker & route
+      if (destMarker) destMap.removeLayer(destMarker);
+      if (routeLine)  destMap.removeLayer(routeLine);
+
+      // New destination marker
+      destMarker = L.marker([d.lat, d.lng], {
+        icon: L.divIcon({ className: '', html: '<div class="dot-dest"></div>', iconSize: [14,14], iconAnchor: [7,7] })
+      }).addTo(destMap).bindPopup('📦 ' + d.label + ' — Destino');
+
+      // Dashed golden route line
+      routeLine = L.polyline([TOLIMA, [d.lat, d.lng]], {
+        color: '#c8a84b', weight: 2, dashArray: '6, 10', opacity: .85
+      }).addTo(destMap);
+
+      // Fly to fit both points
+      destMap.flyToBounds(routeLine.getBounds(), { padding: [40,40], duration: 0.9, easeLinearity: 0.3 });
+    }, 80);
+  };
+
+  // Hook into existing updateTrackingCountry
+  const _origUpdateTracking = window.updateTrackingCountry;
+  document.addEventListener('DOMContentLoaded', function() {
+    const sel = document.getElementById('trk-country-sel');
+    if (sel) {
+      sel.addEventListener('change', function() {
+        window.showDestinationMap(this.value);
+      });
+    }
+  });
+})();
+</script>
+
+
+<script>
+/* ===== PRODUCT PAGE INLINE CART PANEL ===== */
+
+function isOnProductPage() {
+  const pg = document.getElementById('pg-producto');
+  return pg && pg.classList.contains('active');
+}
+
+function toggleProdCartPanel() {
+  const panel = document.getElementById('prod-cart-panel');
+  if (!panel) return;
+  panel.classList.toggle('show');
+  if (panel.classList.contains('show')) renderProdCart();
+}
+
+function renderProdCart() {
+  // Sync country selector with product page selector if not set
+  const pcpSel2  = document.getElementById('pcp-ship-country');
+  const prodSel2 = document.getElementById('ship-country-sel');
+  if (pcpSel2 && !pcpSel2.value && prodSel2 && prodSel2.value) {
+    pcpSel2.value = prodSel2.value;
+  }
+  const itemsEl    = document.getElementById('pcp-items');
+  const emptyEl    = document.getElementById('pcp-empty');
+  const breakdownEl= document.getElementById('pcp-breakdown');
+  const totalEl    = document.getElementById('pcp-total');
+  const shipSel    = document.getElementById('pcp-ship-country');
+  if (!itemsEl) return;
+
+  const shipCode = shipSel ? shipSel.value : '';
+  const lang = typeof curLang !== 'undefined' ? curLang : 'es';
+
+  if (!cartData.length) {
+    emptyEl.style.display = 'block';
+    itemsEl.innerHTML = '';
+    breakdownEl.style.display = 'none';
+    if (totalEl) totalEl.textContent = '$0.00';
+    return;
+  }
+  emptyEl.style.display = 'none';
+
+  // Render items
+  itemsEl.innerHTML = cartData.map((it, i) => {
+    const name = it[lang] || it.es || it.en;
+    const sub  = it.price * it.qty;
+    return `<div class="pcp-item">
+      <span class="pcp-item-icon">🥑</span>
+      <div>
+        <div class="pcp-item-name">${name}</div>
+        <div class="pcp-item-detail">cajas ${it.qty} · $${it.price.toFixed(2)} c/u</div>
+      </div>
+      <span class="pcp-item-price">$${sub.toFixed(2)}</span>
+      <button class="pcp-item-del" onclick="pcpRemove(${i})" title="Eliminar">🗑</button>
+    </div>`;
+  }).join('');
+
+  const subtotal = cartData.reduce((a,b) => a + b.price * b.qty, 0);
+  let shipCost = 0, shipLine = '', shipNote = '';
+
+  if (shipCode && typeof SHIPPING_DATA !== 'undefined' && SHIPPING_DATA[shipCode]) {
+    const sd = SHIPPING_DATA[shipCode];
+    const totalBoxes = cartData.reduce((a,b) => a + b.qty, 0);
+    shipCost = sd.costNum > 0 ? sd.costNum * totalBoxes : 0;
+    shipLine = `<div class="pb-row">
+      <span>${sd.flag || ''} Envío ${sd.flag || ''} ${sd.name}</span>
+      <span style="color:var(--gold)">$${shipCost.toFixed(2)}</span>
+    </div>
+    <div style="font-size:.71rem;color:var(--txt-lt);padding:2px 0 4px">🕐 ${sd.days || ''} · ${sd.route || ''}</div>`;
+  }
+
+  const grand = subtotal + shipCost;
+  breakdownEl.style.display = 'block';
+  breakdownEl.innerHTML =
+    cartData.map(it => {
+      const name = it[lang] || it.es || it.en;
+      return `<div class="pb-row"><span>${name} ×${it.qty}</span><span>$${(it.price*it.qty).toFixed(2)}</span></div>`;
+    }).join('') +
+    shipLine +
+    `<div class="pb-row"><span>Total</span><span>$${grand.toFixed(2)}</span></div>`;
+
+  if (totalEl) totalEl.textContent = '$' + grand.toFixed(2);
+}
+
+function pcpRemove(idx) {
+  cartData.splice(idx, 1);
+  updateProdCartBtn();
+  renderProdCart();
+  if (typeof refreshCart === 'function') refreshCart();
+}
+
+function pcpCheckout() {
+  if (!cartData.length) { alert('Tu carrito está vacío'); return; }
+
+  const lang = typeof curLang !== 'undefined' ? curLang : 'es';
+  const pcpSel  = document.getElementById('pcp-ship-country');
+  const prodSel = document.getElementById('ship-country-sel');
+  let shipCode  = (pcpSel && pcpSel.value) ? pcpSel.value
+                : (prodSel && prodSel.value) ? prodSel.value : '';
+
+  const omItems    = document.getElementById('om-items');
+  const omShipRow  = document.getElementById('om-ship-row');
+  const omShipNote = document.getElementById('om-ship-note');
+  const omTotal    = document.getElementById('om-total');
+  const omDetail   = document.getElementById('om-detail');
+
+  if (omItems) {
+    const subtotal = cartData.reduce((a,b) => a + b.price * b.qty, 0);
+    let shipCost = 0;
+
+    omItems.innerHTML = cartData.map(it => {
+      const name = it[lang] || it.es || it.en;
+      return '<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);">'
+        + '<span>🥑 ' + name + ' ×' + it.qty + '</span>'
+        + '<span style="font-weight:600;color:#1a3a1f;">$' + (it.price*it.qty).toFixed(2) + '</span>'
+        + '</div>';
+    }).join('');
+
+    if (shipCode && typeof SHIPPING_DATA !== 'undefined' && SHIPPING_DATA[shipCode]) {
+      const sd    = SHIPPING_DATA[shipCode];
+      const boxes = cartData.reduce((a,b) => a + b.qty, 0);
+      shipCost    = sd.costNum > 0 ? sd.costNum * boxes : 0;
+      if (omShipRow) {
+        omShipRow.style.display = 'flex';
+        omShipRow.style.justifyContent = 'space-between';
+        omShipRow.innerHTML = '<span>' + (sd.flag||'🚢') + ' Envío a ' + sd.name + '</span>'
+          + '<span style="color:#c8a84b;">$' + shipCost.toFixed(2) + '</span>';
+      }
+      if (omShipNote) omShipNote.textContent = '🕐 ' + (sd.days||'') + ' · ' + (sd.route||'');
+    } else {
+      if (omShipRow)  omShipRow.style.display = 'none';
+      if (omShipNote) omShipNote.textContent  = 'Selecciona un país de envío para ver el costo';
+    }
+
+    const grand = subtotal + shipCost;
+    if (omTotal)  omTotal.textContent   = '$' + grand.toFixed(2);
+    if (omDetail) omDetail.style.display = 'block';
+  }
+
+  const ref   = 'GGC-' + Date.now().toString().slice(-6);
+  const omRef = document.getElementById('om-ref');
+  if (omRef) omRef.textContent = 'Ref: ' + ref;
+
+  const t       = (typeof T !== 'undefined' && T[lang]) ? T[lang] : {};
+  const omTitle = document.querySelector('#order-modal [data-i18n="om_title"]');
+  const omDesc  = document.querySelector('#order-modal [data-i18n="om_desc"]');
+  const omClose = document.querySelector('#order-modal [data-i18n="om_close"]');
+  if (omTitle && t.om_title) omTitle.textContent = t.om_title;
+  if (omDesc  && t.om_desc)  omDesc.textContent  = t.om_desc;
+  if (omClose && t.om_close) omClose.textContent = t.om_close;
+
+  document.getElementById('order-modal').classList.add('show');
+
+  const panel = document.getElementById('prod-cart-panel');
+  if (panel) panel.classList.remove('show');
+  cartData = [];
+  updateProdCartBtn();
+  if (typeof refreshCart === 'function') refreshCart();
+}
+
+function updateProdCartBtn() {
+  const btn   = document.getElementById('prod-cart-btn');
+  const badge = document.getElementById('prod-cart-badge');
+  if (!btn) return;
+  const total = cartData.reduce((a,b) => a + b.qty, 0);
+  if (total > 0 && isOnProductPage()) {
+    btn.style.display = 'flex';
+    if (badge) badge.textContent = total;
+  } else {
+    btn.style.display = 'none';
+    // Also close panel if cart emptied
+    const panel = document.getElementById('prod-cart-panel');
+    if (panel) panel.classList.remove('show');
+  }
+}
+
+// Override toggleCart to do nothing (no sidebar from other pages)
+window.toggleCart = function() {
+  if (!isOnProductPage()) return;
+  toggleProdCartPanel();
+};
+
+// Override addCart: after adding show button + open panel
+const _origAddCart2 = window.addCart;
+window.addCart = function() {
+  if (typeof _origAddCart2 === 'function') _origAddCart2();
+  updateProdCartBtn();
+  if (isOnProductPage()) {
+    const panel = document.getElementById('prod-cart-panel');
+    if (panel) { panel.classList.add('show'); renderProdCart(); }
+    // Close sidebar if somehow open
+    const sidebar = document.getElementById('cart-sidebar');
+    const overlay = document.getElementById('cart-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+  }
+};
+
+// Hide panel when navigating away
+const _origGoTo = window.goTo;
+window.goTo = function(page, el) {
+  if (page !== 'producto') {
+    const panel = document.getElementById('prod-cart-panel');
+    if (panel) panel.classList.remove('show');
+    const sidebar = document.getElementById('cart-sidebar');
+    const overlay = document.getElementById('cart-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+  }
+  if (typeof _origGoTo === 'function') _origGoTo(page, el);
+  setTimeout(updateProdCartBtn, 50);
+};
+
+// Override checkoutOrder (sidebar's button) — same behavior
+const _origCheckout = window.checkoutOrder;
+window.checkoutOrder = function() {
+  const sidebar = document.getElementById('cart-sidebar');
+  const overlay = document.getElementById('cart-overlay');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
+  if (typeof _origCheckout === 'function') _origCheckout();
+  updateProdCartBtn();
+};
+
+document.addEventListener('DOMContentLoaded', function() { updateProdCartBtn(); });
+</script>
+
 </body>
 </html>

@@ -3,6 +3,8 @@
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥑</text></svg>">
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Green Gold Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,23 +44,30 @@ img{display:block;max-width:100%}
    LANG BAR
 ============================================================ */
 #lang-bar{
-  position:fixed;top:0;right:0;z-index:1200;
-  display:flex;gap:4px;padding:4px 8px;
-  background:rgba(26,58,31,.94);backdrop-filter:blur(10px);
-  border-bottom-left-radius:4px;
-  
+  position:fixed;top:8px;right:12px;z-index:1200;
+  display:flex;align-items:center;gap:5px;
+  padding:5px 10px;
+  background:rgba(26,58,31,.92);backdrop-filter:blur(10px);
+  border-radius:10px;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);
 }
 .lang-btn{
-  background:none;border:1px solid rgba(200,168,75,.4);
-  color:var(--gold-lt);padding:4px 9px;border-radius:3px;
-  cursor:pointer;font-size:.10rem;font-family:'DM Sans',sans-serif;
-  font-weight:100;letter-spacing:.08em;transition:all .2s;
-  margin:4px;
-
+  background:none;border:1px solid rgba(200,168,75,.35);
+  color:var(--gold-lt);padding:3px 5px;border-radius:6px;
+  cursor:pointer;font-size:0;font-family:'DM Sans',sans-serif;
+  font-weight:500;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;
+  line-height:1;
 }
-.lang-btn.active,.lang-btn:hover{background:var(--gold);color:var(--g-deep);border-color:var(--gold);
-width:20%;
-height: auto;
+.lang-btn img{
+  width:22px;height:15px;
+  object-fit:cover;border-radius:2px;
+  display:block;pointer-events:none;
+}
+.lang-btn.active,.lang-btn:hover{
+  background:rgba(200,168,75,.25);
+  border-color:var(--gold);
+  box-shadow:0 0 0 1.5px var(--gold);
 }
 
 /* ============================================================
@@ -68,7 +77,7 @@ height: auto;
   position:fixed;top:0;left:0;right:0;z-index:1050;
   background:rgba(26,58,31,.96);backdrop-filter:blur(12px);
   display:flex;align-items:center;justify-content:center;
-  padding:0 220px 0 64px; /* left: space for hamburger, right: space for lang-bar */
+  padding:0 160px 0 64px; /* left: space for hamburger, right: space for lang-bar */
   height:52px;
   border-bottom:1px solid rgba(200,168,75,.15);
   overflow-x:auto;
@@ -596,7 +605,8 @@ height: auto;
 .trk-country-label{
   font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--g-mid);font-weight:600;margin-bottom:8px;
-}.trk-country-select{
+}
+.trk-country-select{
   width:100%;background:var(--cream);border:1.5px solid rgba(26,58,31,.18);
   border-radius:10px;padding:10px 14px;font-size:.86rem;font-family:'DM Sans',sans-serif;
   color:var(--txt-dark);cursor:pointer;transition:border-color .2s;appearance:none;
@@ -604,6 +614,53 @@ height: auto;
   background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;
 }
 .trk-country-select:focus{outline:none;border-color:var(--g-mid)}
+
+/* === MAP DESTINATION === */
+#trk-map-container {
+  display: none;
+  margin-top: 18px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26,58,31,.18);
+  border: 2px solid rgba(200,168,75,.3);
+  animation: pgIn .4s ease both;
+}
+#trk-map-container.show { display: block; }
+#trk-destination-map {
+  height: 260px;
+  width: 100%;
+  border-radius: 14px;
+}
+.map-caption {
+  background: var(--g-deep);
+  color: rgba(255,255,255,.75);
+  font-size: .76rem;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.map-caption strong { color: var(--gold-lt); }
+.dot-dest {
+  background: #c8a84b;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid #1a3a1f;
+  box-shadow: 0 0 18px #c8a84b;
+  animation: mapPulse 1.5s infinite;
+}
+.dot-origin {
+  background: #4caf60;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 12px #4caf60;
+}
+@keyframes mapPulse {
+  0%,100% { transform: scale(1); opacity:1; }
+  50% { transform: scale(1.4); opacity:.8; }
+}
+
 </style>
 </head>
 <body>
@@ -612,32 +669,22 @@ height: auto;
 <!-- LANG BAR (top right) -->
 <div id="lang-bar">
   <button class="lang-btn active" onclick="setLang('es', this)">
-    <img src="https://flagcdn.com/w80/es.png" alt="ES">
+    <img src="https://flagcdn.com/w40/es.png" alt="ES">
     <span></span>
   </button>
-<<<<<<< HEAD
-=======
   
->>>>>>> c29f7dfe486fc0a3022be1b23af61204466a2957
   <button class="lang-btn" onclick="setLang('en', this)">
-    <img src="https://flagcdn.com/w80/us.png" alt="EN">
+    <img src="https://flagcdn.com/w40/us.png" alt="EN">
     <span></span>
   </button>
-<<<<<<< HEAD
-  <button class="lang-btn active" onclick="setLang('de', this)">
-    <img src="https://flagcdn.com/w80/de.png" alt="DE">
-    <span></span>
-  </button>
-=======
   
   <button class="lang-btn" onclick="setLang('de', this)">
-    <img src="https://flagcdn.com/w80/de.png" alt="DE">
+    <img src="https://flagcdn.com/w40/de.png" alt="DE">
     <span></span>
   </button>
 
->>>>>>> c29f7dfe486fc0a3022be1b23af61204466a2957
   <button class="lang-btn" onclick="setLang('zh', this)">
-    <img src="https://flagcdn.com/w80/cn.png" alt="ZH">
+    <img src="https://flagcdn.com/w40/cn.png" alt="ZH">
     <span></span>
   </button>
 </div>
@@ -1010,6 +1057,13 @@ function setLang(lang, element) {
           <div id="trk-country-time" style="color:rgba(255,255,255,.8)"></div>
           <div id="trk-country-route" style="color:rgba(255,255,255,.5);font-size:.74rem;margin-top:2px"></div>
         </div>
+        <div id="trk-map-container">
+          <div id="trk-destination-map"></div>
+          <div class="map-caption">
+            <span>📍</span>
+            <span>Origen: <strong>Tolima, Colombia</strong> &rarr; Destino: <strong id="map-dest-label">—</strong></span>
+          </div>
+        </div>
       </div>
 
       <div class="rastreo-tracker reveal" style="margin-top:40px">
@@ -1135,7 +1189,7 @@ function setLang(lang, element) {
     <button class="cart-close" onclick="toggleCart()">✕</button>
   </div>
   <div class="cart-body" id="cart-body">
-    <div class="cart-empty-msg"><div class="ei">🥑</div><p data-i18n="cart_empty">Tu carrito está vacío</p></div>
+    <div class="cart-empty-msg"><div class="ei"><img src="Aguacate1.jpg"></div><p data-i18n="cart_empty">Tu carrito está vacío</p></div>
   </div>
   <div class="cart-ftr">
     <div class="cart-breakdown" id="cart-breakdown" style="display:none">
@@ -1753,5 +1807,97 @@ function playVideo() {
   `;
 }
 </script>
+
+<!-- Leaflet JS for destination map -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function() {
+  // Coordinates for each destination country (capital / main port)
+  const DEST_COORDS = {
+    de: { lat: 53.55,  lng: 9.99,   label: 'Hamburgo, Alemania',        zoom: 5 },
+    nl: { lat: 51.92,  lng: 4.47,   label: 'Rotterdam, Países Bajos',   zoom: 5 },
+    es: { lat: 41.38,  lng: 2.17,   label: 'Barcelona, España',         zoom: 5 },
+    fr: { lat: 49.49,  lng: 0.10,   label: 'Le Havre, Francia',         zoom: 5 },
+    uk: { lat: 51.96,  lng: 1.35,   label: 'Felixstowe, Reino Unido',   zoom: 5 },
+    cn: { lat: 31.23,  lng: 121.47, label: 'Shanghái, China',           zoom: 4 },
+    jp: { lat: 35.45,  lng: 139.64, label: 'Tokio, Japón',              zoom: 5 },
+    us: { lat: 25.77,  lng: -80.19, label: 'Miami, EE.UU.',             zoom: 4 },
+    mx: { lat: 19.43,  lng: -99.13, label: 'Ciudad de México, México',  zoom: 5 },
+    br: { lat: -23.55, lng: -46.63, label: 'São Paulo, Brasil',         zoom: 4 },
+    ca: { lat: 43.65,  lng: -79.38, label: 'Toronto, Canadá',           zoom: 4 },
+    au: { lat: -33.86, lng: 151.20, label: 'Sídney, Australia',         zoom: 4 }
+  };
+
+  const TOLIMA = [4.4389, -75.2322];
+  let destMap = null;
+  let destMarker = null;
+  let originMarker = null;
+  let routeLine = null;
+
+  function initDestMap() {
+    if (destMap) return;
+    destMap = L.map('trk-destination-map', { zoomControl: true, scrollWheelZoom: false })
+               .setView(TOLIMA, 2);
+    L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0','mt1','mt2','mt3'],
+      attribution: '© Google'
+    }).addTo(destMap);
+
+    // Fixed origin marker (Tolima)
+    originMarker = L.marker(TOLIMA, {
+      icon: L.divIcon({ className: '', html: '<div class="dot-origin"></div>', iconSize: [10,10], iconAnchor: [5,5] })
+    }).addTo(destMap).bindPopup('🌿 Tolima, Colombia — Origen');
+  }
+
+  window.showDestinationMap = function(countryCode) {
+    const container = document.getElementById('trk-map-container');
+    const labelEl = document.getElementById('map-dest-label');
+    if (!countryCode || !DEST_COORDS[countryCode]) {
+      container.classList.remove('show');
+      return;
+    }
+    const d = DEST_COORDS[countryCode];
+    container.classList.add('show');
+    labelEl.textContent = d.label;
+
+    // Init map lazily (must be visible first)
+    setTimeout(function() {
+      initDestMap();
+      destMap.invalidateSize();
+
+      // Remove old destination marker & route
+      if (destMarker) destMap.removeLayer(destMarker);
+      if (routeLine)  destMap.removeLayer(routeLine);
+
+      // New destination marker
+      destMarker = L.marker([d.lat, d.lng], {
+        icon: L.divIcon({ className: '', html: '<div class="dot-dest"></div>', iconSize: [14,14], iconAnchor: [7,7] })
+      }).addTo(destMap).bindPopup('📦 ' + d.label + ' — Destino');
+
+      // Dashed golden route line
+      routeLine = L.polyline([TOLIMA, [d.lat, d.lng]], {
+        color: '#c8a84b', weight: 2, dashArray: '6, 10', opacity: .85
+      }).addTo(destMap);
+
+      // Fly to fit both points
+      destMap.flyToBounds(routeLine.getBounds(), { padding: [40,40], duration: 0.9, easeLinearity: 0.3 });
+    }, 80);
+  };
+
+  // Hook into existing updateTrackingCountry
+  const _origUpdateTracking = window.updateTrackingCountry;
+  document.addEventListener('DOMContentLoaded', function() {
+    const sel = document.getElementById('trk-country-sel');
+    if (sel) {
+      sel.addEventListener('change', function() {
+        window.showDestinationMap(this.value);
+      });
+    }
+  });
+})();
+</script>
+<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/03/28/18/20260328181117-7P7PDP16.js" defer></script>
 </body>
 </html>
